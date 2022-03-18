@@ -1,0 +1,2 @@
+deploy instruction for git
+https://github.com/gitname/react-gh-pages
