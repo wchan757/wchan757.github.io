@@ -1,0 +1,58 @@
+{
+  "name": "octavia_material",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://wchan757.github.io",
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@testing-library/jest-dom": "^5.16.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "material-table": "git+https://github.com/dekelb/material-table.git",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.2",
+    "xlsx": "^0.18.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": ">>Octavia is a project that focusing on optimziing our CI/CD process through following three methods:\r 1. Spark SQL Syntax Checking --- Finished\r 2. Dag Syntax Checking --- Finished\r 3. CI/CD Deployment Processing Automation --- Finished\r 4. Multi-BU Query Generator --- Working🚧",
+  "main": "index.js",
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wchan757/octavia_material.git"
+  },
+  "author": "Roy Lam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wchan757/octavia_material/issues"
+  }
+}
