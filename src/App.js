@@ -71,8 +71,9 @@ const [data, setData] = useState([
 ]);
 
 const [columns, setColumns] = useState([
-  { title: "Query", field: "Query" },
-  { title: "BU", field: "BU" },
+  { title: "Query", field: "Query",editable:'always'},
+  { title: "BU", field: "BU" ,editable:'always'},
+
 ]);
 
 
@@ -588,7 +589,7 @@ const lastpage = () => {
          <input type ='file' onChange ={importExcel}/>
     {isLoading? 
     <div style={{ width: 200, height: 200 }}>
-    <CircularProgress value={66}
+    <CircularProgress value={0}
      />
   </div>:
 
@@ -608,7 +609,7 @@ const lastpage = () => {
   //       this.props.onTreeExpandChange(data, data.tableData.isTreeExpanded)
   //   })}}
 
-    editable = {{onRowUpdate:(newValue, oldValue, rowData, columnDef) =>
+    editable = {{onRowUpdate:(newValue, oldValue) =>
       new Promise((resolve, reject) => {
         setTimeout(() => {
           let dataUpdate = [...data];
@@ -623,8 +624,8 @@ const lastpage = () => {
               break
             }
             
-          console.log('test')
-          console.log(pass_index)
+          //console.log('test')
+          //console.log(pass_index)
 
 
 
@@ -693,19 +694,20 @@ const lastpage = () => {
     
   icons={tableIcons}
   options={{
+    tableLayout: 'auto',
     headerSelectionProps: {
       disabled : true    },
     //addRowPosition: "Last",
     //search: false,
-    //actionsColumnIndex: 20,
+    //actionsColumnIndex: 0,
     //headerStyle: { position: 'sticky',top:0},
     isLoading: true,
-    sorting : true,
+    //sorting : true,
     //minBodyHeight:500,
     //maxBodyHeight:1000,
     paging:false,
     padding:'dense',
-    //editable =true,
+    //editable :true,
     // exportButton: {
     //   csv: true,
     //   pdf: false,
@@ -730,24 +732,31 @@ const lastpage = () => {
   //   csv: true,
   //   pdf: true
   // } ,    
-  selection : true,
-    draggable: false,
+  selection : false,
+    draggable: true,
     selectionProps: row => ({
-                            disabled : true
+                            disabled : false
 
                             
                           }),
     rowStyle: {
-      fontSize: 12,
-      //height: 0,
+      fontSize: 8,
+      //height: 8,
+      //borderBottom: "none",
+      borderBottom: '2px solid white'
 
     },
-    //cellStyle : {width:0,
-     //           height:0},
+    //cellStyle : {width:200,
+     //           maxWidth:200},
 
 
     //selectionProps: row => ({disabled: row.tableData.disabled})
     
+    }}
+    localization={{
+      header : {
+         actions: ''
+      }
     }}
 
     // localization={{
