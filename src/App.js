@@ -8,6 +8,16 @@ import React ,{ useState,useEffect } from 'react';
 import * as XLSX from 'xlsx/xlsx.mjs';
 //import {XLSX} from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
+import { makeStyles } from '@material-ui/core/styles';
+
+// const useStyles = makeStyles({
+//   colHeader: {
+//     color: "red",
+//     "&:hover": {
+//       color: "blue"
+//     }
+//   }
+// });
 
 //import reportWebVitals from './reportWebVitals';
 
@@ -71,8 +81,9 @@ const [data, setData] = useState([
 ]);
 
 const [columns, setColumns] = useState([
-  { title: "Query", field: "Query",editable:'always'},
-  { title: "BU", field: "BU" ,editable:'always'},
+  { title: "Query", field: "Query",editable:'always', cellStyle: {
+    textAlign: "centre"}},
+  { title: "BU", field: "BU" ,editable:'always',textAlign: "centre"},
 
 ]);
 
@@ -586,22 +597,11 @@ const lastpage = () => {
 
   return (
     <div className = "OCTAVIA">
-         <input type ='file' onChange ={importExcel}/>
-    {isLoading? 
-    <div style={{ width: 200, height: 200 }}>
-    <CircularProgress value={0}
-     />
-  </div>:
-
-//{/* <tr>
-//<td colspan="6">
-//  <CircularProgress/>
-//</td>
-//</tr>: */}
+    <input type ='file' onChange ={importExcel}/>
 
   <MaterialTable 
-  
   title="Query Editior" 
+  style={{ width: "100%", margin: "0%" }}
   // onTreeExpandChange = {(path,data) =>{
   //   this.dataManager.changeTreeExpand(path);
   //   this.setState(this.dataManager.getRenderState(), () => {
@@ -669,7 +669,7 @@ const lastpage = () => {
       first_set(false);
       resolve();
     }, 1000)
-        }),
+        })
 
     
     }}
@@ -700,9 +700,10 @@ const lastpage = () => {
     //addRowPosition: "Last",
     //search: false,
     //actionsColumnIndex: 0,
-    //headerStyle: { position: 'sticky',top:0},
+    headerStyle: { position: 'sticky',top:1, backgroundColor: "#f7f7f7" },
     isLoading: true,
-    //sorting : true,
+    sorting : false,
+    //grouping : true,
     //minBodyHeight:500,
     //maxBodyHeight:1000,
     paging:false,
@@ -732,20 +733,64 @@ const lastpage = () => {
   //   csv: true,
   //   pdf: true
   // } ,    
+  //actionsColumnIndex: -1,
+  //toolbarButtonAlignment:"left",
   selection : false,
     draggable: true,
     selectionProps: row => ({
-                            disabled : false
+                            disabled : true,
+                            //checked:true,
+                            //hidden:true
+
 
                             
                           }),
-    rowStyle: {
-      fontSize: 8,
-      //height: 8,
-      //borderBottom: "none",
-      borderBottom: '2px solid white'
+          rowStyle: rowData => {
+            //console.log(type(rowData))
+            var data = rowData.tableData.isTreeExpanded == true
+            console.log(rowData)
+            let styles = { transition: 'transform 300ms' };
+            const levels = rowData.tableData.path.length === 1 ? 0 : rowData.tableData.path.length;
+            styles = { ...styles, '--left-before': `${levels * 6}px` };
+            //console.log([...rowData])
+            //for (let temp_data in rowData)
+            //{console.log(rowData[temp_data])}
+            //{if rowData[temp_data]}
+            if (rowData.parentid != 'no')
+            {return{
+              //...styles,
+              //padding : 'dense',
+              'text-indent': '20px',
+              'font-size': '6px',
+              //fontWeight: 600,
+              backgroundColor: 'rgba(77, 93, 241, 0.08)',
+            }
+          }
+          else {return {'font-size': '8px'}}
 
-    },
+            // return rowData.tableData.isTreeExpanded
+            //   ? {
+            //       //...styles,
+            //       padding : 'dense',
+            //       fontWeight: 600,
+            //       backgroundColor: 'rgba(77, 93, 241, 0.08)'
+            //     }
+            //   : {};
+          }
+        
+                      
+
+
+
+
+
+    // rowStyle: {
+    //   fontSize: 8,
+    //   //height: 8,
+    //   //borderBottom: "none",
+    //   borderBottom: '2px solid white'
+
+    // },
     //cellStyle : {width:200,
      //           maxWidth:200},
 
@@ -755,7 +800,7 @@ const lastpage = () => {
     }}
     localization={{
       header : {
-         actions: ''
+         actions: 'Actions'
       }
     }}
 
@@ -793,6 +838,7 @@ const lastpage = () => {
     //   }
     // }}
     //LastPage
+    
     actions={[
       {icon: tableIcons.FirstPage,
         tooltip: "last step",
@@ -899,7 +945,7 @@ const lastpage = () => {
     }
   }
   />
-  }
+  
 </div>
 
   

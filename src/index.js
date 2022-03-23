@@ -7,7 +7,7 @@ import BasicTable from './App'
 
 ReactDOM.render(
   <React.StrictMode>
-    <BasicTable />,
+    <BasicTable />
   </React.StrictMode>,
   document.getElementById('root')
 );
