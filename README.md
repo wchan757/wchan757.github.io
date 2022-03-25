@@ -5,3 +5,4 @@
 4. Edit mode query , bu 對返位 (Fixed 22/03)
 5. export sql.query
 6. indent the tree data. Side effect from issue 4 (fixed 23/03)
+7. action fucntion modification (done except for 1."@" non changable 2."row click edit" 3.change logo')
