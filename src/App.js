@@ -9,6 +9,8 @@ import * as XLSX from 'xlsx/xlsx.mjs';
 //import {XLSX} from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
 import { makeStyles } from '@material-ui/core/styles';
+//import logo from './cross.png';
+
 
 // const useStyles = makeStyles({
 //   colHeader: {
@@ -82,7 +84,24 @@ const [data, setData] = useState([
 
 const [columns, setColumns] = useState([
   { title: "Query", field: "Query",editable:'always', cellStyle: {
-    textAlign: "centre"}},
+    textAlign: "centre"},
+    // validate: rowData => 
+    // {let report_data = [...data]
+    // let list_check = []
+    // for (let iter_num in report_data)
+    // {list_check.push(report_data[iter_num].parentid)}
+    // // console.log(list_check)
+    // // console.log(rowData)
+    // console.log([...data])
+    // //console.log(rowData)
+    // if (list_check.includes(rowData.id) & rowData.Query.startsWith('@') == false)
+    //   return false
+    // if (list_check.includes(rowData.id) == false & rowData.Query.includes('@') == true)
+    // {return false}
+    // else{return true}
+
+  },
+
   { title: "BU", field: "BU" ,editable:'always',textAlign: "centre"},
 
 ]);
@@ -272,7 +291,41 @@ console.log(export_json)
   // //console.log(counter)
 
  
+const bu_specific = (e , rowData) => {
+    previous_action([...data])
+    let _data = [...data]
+    let mum_id = rowData.id
+    let random_id = Math.floor(Math.random() * 1000000)
+    let id_list = []
+    let obj = undefined
+    let temp_str = ''
+    while (obj != undefined){
+      random_id = Math.floor(Math.random() * 1000000);
+      obj = id_list.find(element => element == random_id);
+      if (obj == undefined){
+        obj = id_list.find(element => element == random_id + 1) ;
+        
+      }
+    }
+    _data.push({ id : random_id ,Query: "-",BU:'-',parentid : mum_id})
+    for (let data_number in _data)
+    {temp_str = _data[data_number].Query
+      if (_data[data_number].id == mum_id &  _data[data_number].Query.includes('@') != true)
+      {_data[data_number].Query = '@' + temp_str}
 
+    }
+    //rowData = [rowData]
+    //console.log(rowData)
+
+    //{ id : 8 ,Query: "dsfsdfdsfdsf",BU:'WTCTH',parentid : 5},
+
+    setTimeout(() => {
+      setData(_data);
+      first_set(false);
+      // setIsLoading(false)
+      
+    }, 500)
+}
   
 
 const handleAddRows = (event , rowData) => {
@@ -612,6 +665,7 @@ const lastpage = () => {
     editable = {{onRowUpdate:(newValue, oldValue) =>
       new Promise((resolve, reject) => {
         setTimeout(() => {
+          console.log(data)
           let dataUpdate = [...data];
           let row_table = [...data];
           let range = [...Array(row_table.length).keys()];
@@ -746,9 +800,9 @@ const lastpage = () => {
                             
                           }),
           rowStyle: rowData => {
-            //console.log(type(rowData))
+            //console.log(rowData)
             var data = rowData.tableData.isTreeExpanded == true
-            console.log(rowData)
+            //console.log(rowData)
             let styles = { transition: 'transform 300ms' };
             const levels = rowData.tableData.path.length === 1 ? 0 : rowData.tableData.path.length;
             styles = { ...styles, '--left-before': `${levels * 6}px` };
@@ -761,12 +815,12 @@ const lastpage = () => {
               //...styles,
               //padding : 'dense',
               'text-indent': '20px',
-              'font-size': '6px',
+              'font-size': '12px',
               //fontWeight: 600,
               backgroundColor: 'rgba(77, 93, 241, 0.08)',
             }
           }
-          else {return {'font-size': '8px'}}
+          else {return {'font-size': '12px'}}
 
             // return rowData.tableData.isTreeExpanded
             //   ? {
@@ -862,10 +916,21 @@ const lastpage = () => {
         //onKeypress: console.log('haha'),
           onClick: handleAddRows,
           //isLoading: true,
-
-          
-
-        }
+      
+      
+        },
+        rowData =>(
+        {icon: tableIcons.DetailPanel,
+          tooltip: "Variation",
+          position : 'row',
+          hidden : rowData.parentid != 'no',
+          //isFreeAction : true,
+          //onKeypress: console.log('haha'),
+          onClick: bu_specific,
+            //isLoading: true,
+            disabled : rowData.tableData.childRows != null 
+          })
+        
         // {icon: tableIcons.Edit,
         //   tooltip: "Edit",
         //   //isFreeAction : true,
@@ -953,6 +1018,8 @@ const lastpage = () => {
 
   );
 };
+// reference: for icons
+//https://stackoverflow.com/questions/62339570/how-to-change-the-default-material-table-icons
 
 export default BasicTable 
 
