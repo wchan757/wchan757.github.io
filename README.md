@@ -6,3 +6,5 @@
 5. export sql.query
 6. indent the tree data. Side effect from issue 4 (fixed 23/03)
 7. action fucntion modification (done except for 1."@" non changable 2."row click edit" 3.change logo')
+8. deletet default with bu_specific(29/03/2022)
+9. double click all row editable (29/03/2022)
