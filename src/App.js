@@ -378,8 +378,8 @@ for (const[first , second] of zip(_data , range))
           
           { 
         id : random_id,
-        Query: 'haha',
-        BU:'NULL',
+        Query: '-',
+        BU:'-',
         parentid : index_partent});
       }
        else
@@ -389,18 +389,17 @@ for (const[first , second] of zip(_data , range))
          _data.splice( second + 1 ,0,
         { 
         id :random_id,
-        Query: 'NULL',
+        Query: '-',
         BU:'',
         parentid : "no"
         }
-        ,
-        {
-          id : random_id + 1,
-          Query: 'NULL',
-          BU:'NULL',
-          parentid : random_id
-          }
-        
+        // ,
+        // {
+        //   id : random_id + 1,
+        //   Query: 'NULL',
+        //   BU:'NULL',
+        //   parentid : random_id
+        //   }
         
         );
       }
@@ -728,14 +727,9 @@ const lastpage = () => {
     
     }}
     
-            
+    
 
         
-      
-        
-  
-
-
   // editable = {{onRowAdd:setIsLoading(false)}}
   columns={
     columns
@@ -831,6 +825,8 @@ const lastpage = () => {
             //     }
             //   : {};
           }
+
+          
         
                       
 
@@ -852,6 +848,8 @@ const lastpage = () => {
     //selectionProps: row => ({disabled: row.tableData.disabled})
     
     }}
+
+
     localization={{
       header : {
          actions: 'Actions'
@@ -949,6 +947,11 @@ const lastpage = () => {
         <MTableBodyRow
           {...props}
           draggable= "true"
+          onDoubleClick={e => {
+            //console.log(props.data);
+            props.actions[4]().onClick(e, props.data);
+            //alert("Make row editable");
+          }}
           // onKeyUp={event => {
           //   if (event.key === "Enter"){handleAddRows(1,props.data.tableData)}}}
             
