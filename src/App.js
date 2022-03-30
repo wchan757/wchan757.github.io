@@ -4,6 +4,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 //import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import tableIcons from "./MaterialTableIcons.js";
 import React ,{ useState,useEffect } from 'react';
+import { Icon } from "@material-ui/core";
+import YourLogo from './new_icon/cross.svg'
 //import axios from "axios";
 import * as XLSX from 'xlsx/xlsx.mjs';
 //import {XLSX} from 'xlsx/xlsx.mjs';
@@ -39,6 +41,12 @@ const BasicTable = () => {
 //const { useState } = React;
 const [isLoading, setIsLoading] = useState(false);
  
+const Logo = () => (
+  <Icon>
+      <img src={YourLogo} height={15} width={15}/>
+  </Icon>
+)
+
 
 const [forward_data,forward_action] = useState([
   { id : 0,Query: "SELECT * FROM",BU : '',parentid:'no'},
@@ -654,6 +662,10 @@ const lastpage = () => {
   <MaterialTable 
   title="Query Editior" 
   style={{ width: "100%", margin: "0%" }}
+  // icons={{
+  //   Edit: () => <EditIcon style={{ color: "orange" }} />,
+  //   Delete: () => <DeleteIcon style={{ color: "red" }} />
+  // }}
   // onTreeExpandChange = {(path,data) =>{
   //   this.dataManager.changeTreeExpand(path);
   //   this.setState(this.dataManager.getRenderState(), () => {
@@ -892,7 +904,7 @@ const lastpage = () => {
     //LastPage
     
     actions={[
-      {icon: tableIcons.FirstPage,
+      {icon: Logo,
         tooltip: "last step",
           onClick: lastpage,
           //,isFreeAction:true
@@ -906,7 +918,8 @@ const lastpage = () => {
         position : 'toolbar'
 
       },
-      {icon: tableIcons.Add,
+      {icon : Logo,
+        // icon: tableIcons.Add,
         tooltip: "Add Rows",
         position : 'row',
         //hidden : true,
@@ -1007,9 +1020,11 @@ const lastpage = () => {
           }}
 
         />
+        
 
         
-      )
+      ),
+      
     }
   }
   />
