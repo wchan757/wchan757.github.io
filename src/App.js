@@ -4,9 +4,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 //import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import tableIcons from "./MaterialTableIcons.js";
 import React ,{ useState,useEffect } from 'react';
-import { Icon } from "@material-ui/core";
-import YourLogo from './new_icon/cross.svg'
+import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
+//import YourLogo from './new_icon/plus.svg'
 //import axios from "axios";
+
 import * as XLSX from 'xlsx/xlsx.mjs';
 //import {XLSX} from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
@@ -40,12 +41,8 @@ const BasicTable = () => {
 
 //const { useState } = React;
 const [isLoading, setIsLoading] = useState(false);
- 
-const Logo = () => (
-  <Icon>
-      <img src={YourLogo} height={15} width={15}/>
-  </Icon>
-)
+
+
 
 
 const [forward_data,forward_action] = useState([
@@ -752,8 +749,11 @@ const lastpage = () => {
   //onTreeExpandChange={(data,isTreeExpanded) => console.log(data)}
 
     
-  icons={tableIcons}
+  // icons={}
   options={{
+    actionsCellStyle: {
+      color: 'black',
+      },
     tableLayout: 'auto',
     headerSelectionProps: {
       disabled : true    },
@@ -904,23 +904,28 @@ const lastpage = () => {
     //LastPage
     
     actions={[
-      {icon: Logo,
-        tooltip: "last step",
+      // {icon: tableIcons.Add,
+        {icon: ArrowBackIcon,
+          iconProps: {color:  "secondary" },
+          tooltip: "last step",
           onClick: lastpage,
           //,isFreeAction:true
           position : 'toolbar'  ,
-          disabled : first_disable == true
+          disabled : first_disable == true,
+         
         },
       {icon: tableIcons.Export,
       tooltip: "export",
+      iconProps: { style: { fontSize: "6px", color: "green" } },
         onClick: ExportOption,
         //,isFreeAction:true
         position : 'toolbar'
 
       },
-      {icon : Logo,
-        // icon: tableIcons.Add,
+      {
+        icon: tableIcons.Add,
         tooltip: "Add Rows",
+        iconProps: { style: { fontSize: "6px", color: "green" } },
         position : 'row',
         //hidden : true,
         //isFreeAction : true,
