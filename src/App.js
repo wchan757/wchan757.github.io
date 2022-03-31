@@ -5,6 +5,22 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import tableIcons from "./MaterialTableIcons.js";
 import React ,{ useState,useEffect } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import CallSplitRoundedIcon from '@mui/icons-material/CallSplitRounded';
+import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
+import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutline from "@material-ui/icons/DeleteOutline";
+
+
+
+
+
 //import YourLogo from './new_icon/plus.svg'
 //import axios from "axios";
 
@@ -659,6 +675,15 @@ const lastpage = () => {
   <MaterialTable 
   title="Query Editior" 
   style={{ width: "100%", margin: "0%" }}
+  icons={{Edit: () => <EditOutlinedIcon  style={{ color: "black" }}/>,
+          Delete: () => <DeleteOutline  style={{ color: "black" }} />,
+          Check: () => <CheckCircleOutlineRoundedIcon  style = {{color :'black',"margin-left": "30px"}}/>,
+          Clear: () => <CancelOutlinedIcon style = {{color :'black'}} />
+
+
+}
+        }
+
   // icons={{
   //   Edit: () => <EditIcon style={{ color: "orange" }} />,
   //   Delete: () => <DeleteIcon style={{ color: "red" }} />
@@ -922,10 +947,12 @@ const lastpage = () => {
         position : 'toolbar'
 
       },
-      {
-        icon: tableIcons.Add,
+      // icons={{Edit: () => <EditOutlinedIcon style={{ color: "grey" }}/>,
+
+      {icon:() => <AddCircleOutlineRoundedIcon style = {{color:"black"}}/>,
+        // icon: tableIcons.Add,
         tooltip: "Add Rows",
-        iconProps: { style: { fontSize: "6px", color: "green" } },
+        //iconProps: { style: { fontSize: "6px", color: "green" } },
         position : 'row',
         //hidden : true,
         //isFreeAction : true,
@@ -936,7 +963,10 @@ const lastpage = () => {
       
         },
         rowData =>(
-        {icon: tableIcons.DetailPanel,
+          
+        {icon:() => <CallSplitRoundedIcon style = {{color:"black"}}/>,
+    
+          // icon: tableIcons.DetailPanel,
           tooltip: "Variation",
           position : 'row',
           hidden : rowData.parentid != 'no',
