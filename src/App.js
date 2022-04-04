@@ -16,6 +16,7 @@ import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutl
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
+import TextField from "@material-ui/core/TextField";
 
 
 
@@ -103,9 +104,25 @@ const [data, setData] = useState([
 
 ]);
 
+//TODO: in editable component , determine wherher we need to add the value of '@'
 const [columns, setColumns] = useState([
   { title: "Query", field: "Query",editable:'always', cellStyle: {
     textAlign: "centre"},
+    editComponent: props => {
+      let display = ''
+      if (props.value.startsWith('@')){display = props.value.substring(1)}
+      else {display = props.value}
+      return(
+    <TextField
+      //type="numeric"
+      value={display}
+      onChange={e => props.onChange(e.target.value)}
+    />
+      )}
+  
+  
+  
+
     // validate: rowData => 
     // {let report_data = [...data]
     // let list_check = []
@@ -676,7 +693,7 @@ const lastpage = () => {
   title="Query Editior" 
   style={{ width: "100%", margin: "0%" }}
   icons={{Edit: () => <EditOutlinedIcon  style={{ color: "black" }}/>,
-          Delete: () => <DeleteOutline  style={{ color: "black" }} />,
+          Delete: () => <RemoveCircleOutlineRoundedIcon  style={{ color: "black" }} />,
           Check: () => <CheckCircleOutlineRoundedIcon  style = {{color :'black',"margin-left": "30px"}}/>,
           Clear: () => <CancelOutlinedIcon style = {{color :'black'}} />
 
