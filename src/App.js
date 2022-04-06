@@ -17,19 +17,9 @@ import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import TextField from "@material-ui/core/TextField";
-
-
-
-
-
-//import YourLogo from './new_icon/plus.svg'
-//import axios from "axios";
-
 import * as XLSX from 'xlsx/xlsx.mjs';
-//import {XLSX} from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
 import { makeStyles } from '@material-ui/core/styles';
-//import logo from './cross.png';
 
 
 // const useStyles = makeStyles({
@@ -50,17 +40,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 const BasicTable = () => {
-//   console.time('Timer name');
-//   console.log('start')
-// //do critical time stuff
-// console.timeEnd('Timer name');
-//props.isLoading = false
-
-//const { useState } = React;
 const [isLoading, setIsLoading] = useState(false);
-
-
-
 
 const [forward_data,forward_action] = useState([
   { id : 0,Query: "SELECT * FROM",BU : '',parentid:'no'},
@@ -76,41 +56,39 @@ const [forward_data,forward_action] = useState([
 ]);
 
 
-
 const [previsu_data,previous_action] = useState([
   { id : 0,Query: "SELECT * FROM",BU : '',parentid:'no'},
   { id : 1,Query: "@bu_table",BU : '',parentid:'no'},
-  { id : 1 ,Query: "dsfsdfdsfdsf",BU:'Others',parentid : 1},
-  { id : 2 ,Query: "dsfsdfdsfdsf",BU:'WTCMY',parentid : 1},
-  { id : 3 ,Query: "dsfsdfdsfdsf",BU:'WTCTH',parentid : 1},
-  { id : 4 ,Query: "WHERE condition",BU : '',parentid:'no'},
-  { id : 5 ,Query: "@bu",BU : '',parentid:'no'},
-  { id : 6 ,Query: "dsfsdfdsfdsf",BU:'WTCTW',parentid : 5},
-  { id : 7 ,Query: "dsfsdfdsfdsf",BU:'Others',parentid : 5},
-  { id : 8 ,Query: "dsfsdfdsfdsf",BU:'WTCTH',parentid : 5},
+  { id : 2 ,Query: "dsfsdfdsfdsf",BU:'Others',parentid : 1},
+  { id : 3 ,Query: "dsfsdfdsfdsf",BU:'WTCMY',parentid : 1},
+  { id : 4 ,Query: "dsfsdfdsfdsf",BU:'WTCTH',parentid : 1},
+  { id : 5 ,Query: "WHERE condition",BU : '',parentid:'no'},
+  { id : 6 ,Query: "@bu",BU : '',parentid:'no'},
+  { id : 7 ,Query: "dsfsdfdsfdsf",BU:'WTCTW',parentid : 6},
+  { id : 8 ,Query: "dsfsdfdsfdsf",BU:'Others',parentid : 6},
+  { id : 9 ,Query: "dsfsdfdsfdsf",BU:'WTCTH',parentid : 6},
 ]);
 
 const [data, setData] = useState([
   { id : 0,Query: "SELECT * FROM",BU : '',parentid:'no'},
   { id : 1,Query: "@bu_table",BU : '',parentid:'no'},
-  { id : 1 ,Query: "dsfsdfdsfdsf",BU:'Others',parentid : 1},
-  { id : 2 ,Query: "dsfsdfdsfdsf",BU:'WTCMY',parentid : 1},
-  { id : 3 ,Query: "dsfsdfdsfdsf",BU:'WTCTH',parentid : 1},
-  { id : 4 ,Query: "WHERE condition",BU : '',parentid:'no'},
-  { id : 5 ,Query: "@bu",BU : '',parentid:'no'},
-  { id : 6 ,Query: "dsfsdfdsfdsf",BU:'WTCTW',parentid : 5},
-  { id : 7 ,Query: "dsfsdfdsfdsf",BU:'Others',parentid : 5},
-  { id : 8 ,Query: "dsfsdfdsfdsf",BU:'WTCTH',parentid : 5},
+  { id : 2 ,Query: "dsfsdfdsfdsf",BU:'Others',parentid : 1},
+  { id : 3 ,Query: "dsfsdfdsfdsf",BU:'WTCMY',parentid : 1},
+  { id : 4 ,Query: "dsfsdfdsfdsf",BU:'WTCTH',parentid : 1},
+  { id : 5 ,Query: "WHERE condition",BU : '',parentid:'no'},
+  { id : 6 ,Query: "@bu",BU : '',parentid:'no'},
+  { id : 7 ,Query: "dsfsdfdsfdsf",BU:'WTCTW',parentid : 6},
+  { id : 8 ,Query: "dsfsdfdsfdsf",BU:'Others',parentid : 6},
+  { id : 9 ,Query: "dsfsdfdsfdsf",BU:'WTCTH',parentid : 6},
 
 ]);
 
-//TODO: in editable component , determine wherher we need to add the value of '@'
 const [columns, setColumns] = useState([
   { title: "Query", field: "Query",editable:'always', cellStyle: {
     textAlign: "centre"},
     editComponent: props => {
       let display = ''
-      if (props.value.startsWith('@')){display = props.value.substring(1)}
+      if (props.value.includes('@')){display = props.value.replace('@','')}
       else {display = props.value}
       return(
     <TextField
@@ -119,28 +97,27 @@ const [columns, setColumns] = useState([
       onChange={e => props.onChange(e.target.value)}
     />
       )}
-  
-  
-  
 
-    // validate: rowData => 
-    // {let report_data = [...data]
-    // let list_check = []
-    // for (let iter_num in report_data)
-    // {list_check.push(report_data[iter_num].parentid)}
-    // // console.log(list_check)
-    // // console.log(rowData)
-    // console.log([...data])
-    // //console.log(rowData)
-    // if (list_check.includes(rowData.id) & rowData.Query.startsWith('@') == false)
-    //   return false
-    // if (list_check.includes(rowData.id) == false & rowData.Query.includes('@') == true)
-    // {return false}
-    // else{return true}
 
   },
+  { title: "BU", field: "BU"   
+  ,textAlign: "centre",
+  lookup: {
+          None:'',
+          Others:"Others",
+          FTRTH:'FTRHK',
+          PNSHK:'PNSHK',
+          WTCHK:'WTCHK',
+          WTCID:"WTCID",
+          WTCPH:"WTCPH",
+          WWHK:"WWHK",
+          WTCTW:"WTCTW",
+          WTCMY:"WTCMY",
+          WTCTH:"WTCTH",
+          WTCSG:"WTCSG"
 
-  { title: "BU", field: "BU" ,editable:'always',textAlign: "centre"},
+        }
+},
 
 ]);
 
@@ -280,6 +257,16 @@ console.log(export_json)
     let master_export = [...data]
     let template_query = []
     let template_json = {}
+    let bu_list_use = ['ftrhk','pnshk','wtchk','wtcid','wtcph','wwhk','wtctw','wtcmy','wtcth','wtcsg']
+    let bu_lister = []
+    let temp_no_head = ''
+    let loop_check = 'nothing'
+    let other_check = 'nothing'
+
+    for (let low_bu in bu_list_use)
+  {bu_lister.push(bu_list_use[low_bu].toUpperCase())}
+
+
     
     //create the teamplate_query
     for (var temp in master_export)
@@ -307,8 +294,44 @@ console.log(export_json)
   }
   
   }
+
+  template_json['@bu_query'] = {}
+  for (let bu_name in bu_lister)
+    {template_json['@bu_query'][bu_lister[bu_name]] = [];
+    
+    for (let sub_query in template_query)
+      {loop_check = 'nothing'
+       other_check = 'nothing'
+        if (template_query[sub_query].includes('@') == true)
+        {temp_no_head = template_query[sub_query].substring(1)
+          for (let check_check in template_json[temp_no_head])
+            {if (template_json[temp_no_head][check_check].BU == bu_lister[bu_name])
+                {loop_check = template_json[temp_no_head][check_check].Query}
+
+             {if (template_json[temp_no_head][check_check].BU == 'Others')
+                {other_check = template_json[temp_no_head][check_check].Query}}
+            }
+              
+            if (loop_check == 'nothing')
+            {template_json['@bu_query'][bu_lister[bu_name]].push(other_check)}
+            else
+            {{template_json['@bu_query'][bu_lister[bu_name]].push(loop_check)}}
+
+              }
+          else
+          {{template_json['@bu_query'][bu_lister[bu_name]].push(template_query[sub_query])}
+        
+        }
+    }
+  }
+
+  
+
+  //console.log(template_json)
+
   // export the data to json
   template_json['template_query'] = template_query
+  //console.log(template_json)
   const fileData = JSON.stringify(template_json);
   const blob = new Blob([fileData], {type: "text/plain"});
   const url = URL.createObjectURL(blob);
@@ -721,12 +744,22 @@ const lastpage = () => {
           let range = [...Array(row_table.length).keys()];
           let target_id = newValue.id
           let pass_index = ''
+          let newValue_check = newValue
           
           for (const[first , second] of zip(row_table , range))
             if (first.id == target_id)
             {pass_index = second ;
               break
             }
+          
+          console.log(oldValue)
+
+          if (oldValue.Query.startsWith('@')==true)
+          {newValue_check.Query = newValue.Query.replace('@','');
+          newValue_check.Query = '@' + newValue_check.Query}
+          else 
+          {newValue_check.Query = newValue.Query.replace('@','')}
+
             
           //console.log('test')
           //console.log(pass_index)
@@ -738,7 +771,7 @@ const lastpage = () => {
           // console.log(newValue)
           //console.log(columnDef)
             dataUpdate = dataUpdate.filter(t => t.id !== newValue.id);
-            dataUpdate.splice(pass_index,0,newValue)
+            dataUpdate.splice(pass_index,0,newValue_check)
           
           // dataUpdate
           // dataUpdate[pass_index] = newValue
@@ -764,7 +797,7 @@ const lastpage = () => {
       });
       //console.log(_data)
       let new_data = _data
-      if (rowData[0].parentid != 'no'){console.log('pass'); setData(_data);}
+      if (rowData[0].parentid != 'no'){console.log('pass'); }//setData(_data);}
       else {new_data.forEach(rd => {
         _data = _data.filter(t => t.parentid !== rowData[0].id)
       })}; 
@@ -879,7 +912,7 @@ const lastpage = () => {
             //     }
             //   : {};
           }
-
+         
           
         
                       
@@ -979,10 +1012,19 @@ const lastpage = () => {
       
       
         },
+
         rowData =>(
-          
-        {icon:() => <CallSplitRoundedIcon style = {{color:"black"}}/>,
-    
+          {
+        icon:() => {
+        let color_type = 'black';
+        if (rowData.tableData.childRows != null)
+        {color_type = 'grey'}
+        return(
+        <CallSplitRoundedIcon
+         style = {{color:color_type}}/>
+        )},
+        
+                    
           // icon: tableIcons.DetailPanel,
           tooltip: "Variation",
           position : 'row',
@@ -991,7 +1033,7 @@ const lastpage = () => {
           //onKeypress: console.log('haha'),
           onClick: bu_specific,
             //isLoading: true,
-            disabled : rowData.tableData.childRows != null 
+            disabled : rowData.tableData.childRows != null
           })
         
         // {icon: tableIcons.Edit,
