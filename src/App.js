@@ -784,20 +784,39 @@ const lastpage = () => {
       }),
 
 
-    onRowDelete:(newValue, oldValue, rowData, columnDef) =>
+    onRowDelete:(newValue,rowData) =>
         new Promise((resolve, reject) => {
           setTimeout(() => {
            // console.log(newValue)
            // console.log(oldValue)
           let rowData = [newValue];
           let _data = [...data];
-          console.log(rowData)
+          //console.log(newValue)
       rowData.forEach(rd => {
         _data = _data.filter(t => t.id !== rd.id);
       });
-      //console.log(_data)
+      let mum_check = [..._data]
+
+
+      rowData.forEach(rd => {
+        mum_check = mum_check.filter(t => t.parentid == rd.parentid);
+      });
+      console.log(mum_check)
       let new_data = _data
-      if (rowData[0].parentid != 'no'){console.log('pass'); }//setData(_data);}
+      //console.log(columnDef)
+      if (rowData[0].parentid != 'no')
+      {if (mum_check.length == 0)
+        {for (let data_sub in _data)
+          {if (rowData[0].parentid == _data[data_sub].id && _data[data_sub].Query.startsWith('@'))
+            {_data[data_sub].Query = _data[data_sub].Query.substring(1)}
+          
+          
+          }
+        }
+        else{
+          console.log('pass')}
+      }
+      //setData(_data);}
       else {new_data.forEach(rd => {
         _data = _data.filter(t => t.parentid !== rowData[0].id)
       })}; 
