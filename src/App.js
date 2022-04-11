@@ -94,6 +94,8 @@ const [columns, setColumns] = useState([
       return(
     <TextField
       //type="numeric"
+      fullWidth={true}
+      multiline={true}
       value={display}
       onChange={e => props.onChange(e.target.value)}
     />
@@ -709,7 +711,7 @@ const lastpage = () => {
 
   <MaterialTable 
   title="Query Editior" 
-  style={{ width: "100%", margin: "0%" }}
+  style={{ width: "100%", margin: "0%"}}
   icons={{Edit: () => <EditOutlinedIcon  style={{ color: "black" }}/>,
           Delete: () => <RemoveCircleOutlineRoundedIcon  style={{ color: "black" }} />,
           Check: () => <CheckCircleOutlineRoundedIcon  style = {{color :'black',"margin-left": "30px"}}/>,
@@ -896,6 +898,7 @@ const lastpage = () => {
                           }),
           rowStyle: rowData => {
             //console.log(rowData)
+            
             var data = rowData.tableData.isTreeExpanded == true
             //console.log(rowData)
             let styles = { transition: 'transform 300ms' };
@@ -911,11 +914,14 @@ const lastpage = () => {
               //padding : 'dense',
               'text-indent': '20px',
               'font-size': '12px',
+              'white-space':'pre',
+
               //fontWeight: 600,
               backgroundColor: 'rgba(77, 93, 241, 0.08)',
             }
           }
-          else {return {'font-size': '12px'}}
+          else {return {'font-size': '12px', 'white-space':'pre'
+        }}
 
             // return rowData.tableData.isTreeExpanded
             //   ? {
