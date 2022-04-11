@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.16.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "dt-sql-parser": "^4.0.0-beta.2.2",
     "install": "^0.13.0",
     "material-table": "git+https://github.com/dekelb/material-table.git",
     "npm": "^8.5.5",

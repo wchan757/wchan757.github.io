@@ -20,6 +20,7 @@ import TextField from "@material-ui/core/TextField";
 import * as XLSX from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
 import { makeStyles } from '@material-ui/core/styles';
+//import { GenericSQL } from 'dt-sql-parser';
 
 
 // const useStyles = makeStyles({
@@ -175,81 +176,81 @@ const ExportOption = () => {
   return 
 // console.log(export_data)
 
-  for (let low_bu in bu_list_use)
-  {bu_list.push(bu_list_use[low_bu].toUpperCase())}
+//   for (let low_bu in bu_list_use)
+//   {bu_list.push(bu_list_use[low_bu].toUpperCase())}
 
-  // seperated export_data into two type
-  for (let data_use in export_data)
-  if (export_data[data_use].parentid == 'no')
-  {parent_data.push(export_data[data_use])}
-  else 
-  {  
-    child_data.push(export_data[data_use])}
-
-
-  let temp_child_data = child_data
-  let complete_bu = bu_list
+//   // seperated export_data into two type
+//   for (let data_use in export_data)
+//   if (export_data[data_use].parentid == 'no')
+//   {parent_data.push(export_data[data_use])}
+//   else 
+//   {  
+//     child_data.push(export_data[data_use])}
 
 
-  // get all bu child data
-  for (let child in child_data)
-  {unqiue_child.push(child_data[child].parentid)}
+//   let temp_child_data = child_data
+//   let complete_bu = bu_list
 
-  // only extract unique child data
-  unqiue_child = [... new Set(unqiue_child)]  
-  // console.log(unqiue_child)
 
-  // add all remaining bu in child data
-  for (var new_id in unqiue_child)
-      {
-      temp_query = temp_child_data.filter(n => n.parentid == unqiue_child[new_id] && n.BU == 'Others')
-      // console.log(temp_child_data)
-      temp_query = temp_query[0]
-      let temp_list = child_data.filter(n => n.parentid == unqiue_child[new_id])
-      temp_list.forEach(element => {
-        complete_bu =  complete_bu.filter(n => n !== element.BU)
-        // console.log(complete_bu)
-        // console.log(temp_query)
+//   // get all bu child data
+//   for (let child in child_data)
+//   {unqiue_child.push(child_data[child].parentid)}
+
+//   // only extract unique child data
+//   unqiue_child = [... new Set(unqiue_child)]  
+//   // console.log(unqiue_child)
+
+//   // add all remaining bu in child data
+//   for (var new_id in unqiue_child)
+//       {
+//       temp_query = temp_child_data.filter(n => n.parentid == unqiue_child[new_id] && n.BU == 'Others')
+//       // console.log(temp_child_data)
+//       temp_query = temp_query[0]
+//       let temp_list = child_data.filter(n => n.parentid == unqiue_child[new_id])
+//       temp_list.forEach(element => {
+//         complete_bu =  complete_bu.filter(n => n !== element.BU)
+//         // console.log(complete_bu)
+//         // console.log(temp_query)
         
-       })
-      for (var bu_child in complete_bu)
-      {
-       let new_query = {}
-       new_query['id'] = temp_query['id']
-       new_query['Query'] = temp_query['Query']
-       new_query['BU'] =complete_bu[bu_child]
-       new_query['parentid'] = temp_query['parentid']
+//        })
+//       for (var bu_child in complete_bu)
+//       {
+//        let new_query = {}
+//        new_query['id'] = temp_query['id']
+//        new_query['Query'] = temp_query['Query']
+//        new_query['BU'] =complete_bu[bu_child]
+//        new_query['parentid'] = temp_query['parentid']
 
-       child_data.push(new_query)
+//        child_data.push(new_query)
 
-      }
-    }
-    child_data = child_data.filter(n => n.BU != 'Others')
-    console.log(child_data)
+//       }
+//     }
+//     child_data = child_data.filter(n => n.BU != 'Others')
+//     console.log(child_data)
   
 
-  for (var bu in bu_list )
-  {export_json[bu_list[bu]] = []
-    for (var p_query in parent_data)
-    {
-      if (parent_data[p_query].Query.includes('@') == true)
-      {//create id only 
-        // console.log(parent_data[p_query].Query.includes('%'))
-        for (var c_query in child_data )
-        {if(child_data[c_query].parentid == parent_data[p_query].id && child_data[c_query].BU == bu_list[bu])
-        {
-        export_json[bu_list[bu]].push(child_data[c_query].Query)
-        }}
-      }
-      else
-      {export_json[bu_list[bu]].push(parent_data[p_query].Query)}
+//   for (var bu in bu_list )
+//   {export_json[bu_list[bu]] = []
+//     for (var p_query in parent_data)
+//     {
+//       if (parent_data[p_query].Query.includes('@') == true)
+//       {//create id only 
+//         // console.log(parent_data[p_query].Query.includes('%'))
+//         for (var c_query in child_data )
+//         {if(child_data[c_query].parentid == parent_data[p_query].id && child_data[c_query].BU == bu_list[bu])
+//         {
+//         export_json[bu_list[bu]].push(child_data[c_query].Query)
+//         }}
+//       }
+//       else
+//       {export_json[bu_list[bu]].push(parent_data[p_query].Query)}
 
     
 
     
-  }
-}
-console.log(export_json)
+//   }
+// }
+// console.log(export_json)
 
   }
 
@@ -565,6 +566,7 @@ const importExcel =(e) =>{
   //previous_action([...data])
   //console.log(e.target.files)
   const file = e.target.files[0]
+  console.log(file.name)
   //var mydata = JSON.parse(file);
 
   //alert(mydata[0].name);
@@ -575,8 +577,12 @@ const importExcel =(e) =>{
   //return 
 
   const reader = new FileReader()
+  if (file.name.includes('.json'))
+  {
   reader.onload=(e)=>{
+    console.log(reader.name)
     var jsonObj = JSON.parse(e.target.result);
+    //return 
     var query_list = [] 
     for (var temp_que in jsonObj.template_query)
     {
@@ -612,44 +618,33 @@ const importExcel =(e) =>{
 
       }
       setData(query_list)
-    
-
-  
-  
-  //console.log(query_list)
-    //{console.log(jsonObj.template_query[temp_que])}
-
-
-
-    //{ id : 0,Query: "SELECT * FROM",BU : '',parentid:'no'},
-
-    //console.log(e.target.result)
-  
-
-  return 
-
-  const bstr=e.target.result
-  const workBook =XLSX.read(bstr,{type:"binary"})
-  const workSheetName = workBook.SheetNames
-
-  const workSheet=workBook.Sheets[workSheetName]
-  //convert to array  
-  const fileData=XLSX.utils.sheet_to_csv(workSheet,{header:1})
-  //console.log(fileData)
-
-  //console.log(fileData[0])
-  //console.log(convertToJson(fileData))
-  var json_data = convertToJson(fileData)
-  //console.log(json_data)
-  json_data.splice(-1)
-
-  setData(json_data)
-  first_set(false);
-
-//const headers = fileData[0]
-//  reader.readAsBinaryString(file)
-
+    }
   }
+  else if (file.name.includes('.txt'))
+  {  
+    reader.onload=(e)=>{
+      let clean_list = []
+      let result_list = e.target.result.split(/\r?\n/)
+
+      for (let iter in result_list)
+      {
+      var random_id = Math.floor(Math.random() * 1000000)
+      if (result_list[iter].replace(/\s+/g,'') != '' && result_list[iter].startsWith('--')!= true)
+      {clean_list.push(
+        { id : random_id,
+          Query: result_list[iter],
+          BU : '',
+          parentid:'no'}
+      )}
+
+      }
+      setData(clean_list)
+    }
+
+    }
+  else 
+  {alert ('incorrect file type')}
+  
 reader.readAsBinaryString(file)
 }
 
