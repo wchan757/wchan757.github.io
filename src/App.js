@@ -3,6 +3,7 @@ import MaterialTable,{MTableBodyRow} from "@material-table/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 //import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import tableIcons from "./MaterialTableIcons.js";
+import keyword_highlight from "./keyword_highlight.js";
 import React ,{ useState,useEffect } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
@@ -19,10 +20,11 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import TextField from "@material-ui/core/TextField";
 import * as XLSX from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
+import Highlighter from "react-highlight-words";
 import { makeStyles } from '@material-ui/core/styles';
+
 //import { GenericSQL } from 'dt-sql-parser';
 
-// https://www.npmjs.com/package/react-highlighter
 // const useStyles = makeStyles({
 //   colHeader: {
 //     color: "red",
@@ -41,6 +43,65 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 const BasicTable = () => {
+
+  const findChunksAtBeginningOfWords = ({
+    autoEscape,
+    caseSensitive,
+    sanitize,
+    searchWords,
+    textToHighlight
+  }) => {
+    const chunks = [];
+    const textLow = textToHighlight.toLowerCase();
+    // Match at the beginning of each new word
+    // New word start after whitespace or - (hyphen)
+    const sep = /[-\s]+/;
+  
+    // Match at the beginning of each new word
+    // New word start after whitespace or - (hyphen)
+    const singleTextWords = textLow.split(sep);
+  
+    // It could be possible that there are multiple spaces between words
+    // Hence we store the index (position) of each single word with textToHighlight
+    let fromIndex = 0;
+    const singleTextWordsWithPos = singleTextWords.map(s => {
+      const indexInWord = textLow.indexOf(s, fromIndex);
+      fromIndex = indexInWord;
+      return {
+        word: s,
+        index: indexInWord
+      };
+    });
+  
+    // Add chunks for every searchWord
+    searchWords.forEach(sw => {
+      const swLow = sw.toLowerCase();
+      // Do it for every single text word
+      singleTextWordsWithPos.forEach(s => {
+        if (s.word == swLow || s.word.startsWith('@')) {
+          const start = s.index;
+          const end = s.index + swLow.length;
+          chunks.push({
+            start,
+            end
+          });
+        }
+      });
+  
+      // The complete word including whitespace should also be handled, e.g.
+      // searchWord='Angela Mer' should be highlighted in 'Angela Merkel'
+      if (textLow == swLow) {
+        const start = 0;
+        const end = swLow.length;
+        chunks.push({
+          start,
+          end
+        });
+      }
+    });
+  
+    return chunks;
+  };
 const [isLoading, setIsLoading] = useState(false);
 const [selectedRow, setSelectedRow] = useState(null);
 
@@ -100,7 +161,22 @@ const [columns, setColumns] = useState([
       value={display}
       onChange={e => props.onChange(e.target.value)}
     />
-      )},render : rowData => {
+      )},
+      render : rowData => {
+      return (
+        <Highlighter
+        autoEscape = {true}
+          searchWords={keyword_highlight}
+          textToHighlight = {rowData.Query}
+          findChunks={findChunksAtBeginningOfWords}
+          highlightStyle={
+            {"background-color": rowData.Query.startsWith('@') ? '#FFFF33' : '#32CD32',
+            "font-weight": "bold"
+              }}
+
+        />
+      );
+    }
 
 
   },
