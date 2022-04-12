@@ -22,7 +22,7 @@ import {zip} from 'pythonic';
 import { makeStyles } from '@material-ui/core/styles';
 //import { GenericSQL } from 'dt-sql-parser';
 
-
+// https://www.npmjs.com/package/react-highlighter
 // const useStyles = makeStyles({
 //   colHeader: {
 //     color: "red",
@@ -42,6 +42,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const BasicTable = () => {
 const [isLoading, setIsLoading] = useState(false);
+const [selectedRow, setSelectedRow] = useState(null);
 
 const [forward_data,forward_action] = useState([
   { id : 0,Query: "SELECT * FROM",BU : '',parentid:'no'},
@@ -86,7 +87,7 @@ const [data, setData] = useState([
 
 const [columns, setColumns] = useState([
   { title: "Query", field: "Query",editable:'always', cellStyle: {
-    textAlign: "centre"},
+    color: "black"},
     editComponent: props => {
       let display = ''
       if (props.value.includes('@')){display = props.value.replace('@','')}
@@ -94,12 +95,12 @@ const [columns, setColumns] = useState([
       return(
     <TextField
       //type="numeric"
-      fullWidth={true}
+      //fullWidth={true}
       multiline={true}
       value={display}
       onChange={e => props.onChange(e.target.value)}
     />
-      )}
+      )},render : rowData => {
 
 
   },
@@ -841,11 +842,14 @@ const lastpage = () => {
 
     
   // icons={}
+  onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
   options={{
     actionsCellStyle: {
       color: 'black',
       },
+      loadingType:'linear',
     tableLayout: 'auto',
+    //searchAutoFocus : true,
     headerSelectionProps: {
       disabled : true    },
     //addRowPosition: "Last",
@@ -898,7 +902,6 @@ const lastpage = () => {
                           }),
           rowStyle: rowData => {
             //console.log(rowData)
-            
             var data = rowData.tableData.isTreeExpanded == true
             //console.log(rowData)
             let styles = { transition: 'transform 300ms' };
@@ -910,6 +913,9 @@ const lastpage = () => {
             //{if rowData[temp_data]}
             if (rowData.parentid != 'no')
             {return{
+              backgroundColor: (selectedRow === rowData.tableData.id) ? '#EEE' : '#FFF',
+              backgroundColor: 'rgba(77, 93, 241, 0.08)',
+
               //...styles,
               //padding : 'dense',
               'text-indent': '20px',
@@ -917,10 +923,10 @@ const lastpage = () => {
               'white-space':'pre',
 
               //fontWeight: 600,
-              backgroundColor: 'rgba(77, 93, 241, 0.08)',
             }
           }
-          else {return {'font-size': '12px', 'white-space':'pre'
+          else {return {
+            'font-size': '12px', 'white-space':'pre'
         }}
 
             // return rowData.tableData.isTreeExpanded
@@ -1028,7 +1034,7 @@ const lastpage = () => {
         //isFreeAction : true,
         //onKeypress: console.log('haha'),
           onClick: handleAddRows,
-          //isLoading: true,
+          isLoading: true,
       
       
         },

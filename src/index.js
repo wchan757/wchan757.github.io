@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import BasicTable from './App'
+//import Highlighter from "react-highlight-words";
+
 
 //import reportWebVitals from './reportWebVitals';
 
