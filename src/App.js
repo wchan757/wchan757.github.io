@@ -18,6 +18,8 @@ import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import TextField from "@material-ui/core/TextField";
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import * as XLSX from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
 import Highlighter from "react-highlight-words";
@@ -78,7 +80,7 @@ const BasicTable = () => {
       const swLow = sw.toLowerCase();
       // Do it for every single text word
       singleTextWordsWithPos.forEach(s => {
-        if (s.word == swLow || s.word.startsWith('@')) {
+        if (s.word == swLow || s.word.startsWith('@') || s.word.startsWith(swLow + '(') ) {
           const start = s.index;
           const end = s.index + swLow.length;
           chunks.push({
@@ -171,7 +173,9 @@ const [columns, setColumns] = useState([
           findChunks={findChunksAtBeginningOfWords}
           highlightStyle={
             {"background-color": rowData.Query.startsWith('@') ? '#FFFF33' : '#32CD32',
-            "font-weight": "bold"
+            "font-weight": "bold",
+            "text-transform": "uppercase"
+
               }}
 
         />
@@ -1224,7 +1228,7 @@ const lastpage = () => {
     }
   }
   />
-  
+
 </div>
 
   
