@@ -24,8 +24,9 @@ import * as XLSX from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
 import Highlighter from "react-highlight-words";
 import { makeStyles } from '@material-ui/core/styles';
-
-//import { GenericSQL } from 'dt-sql-parser';
+//import SyntaxHighlighter from 'react-syntax-highlighter';
+//import { sql } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+// import { SparkSQL } from 'dt-sql-parser';
 
 // const useStyles = makeStyles({
 //   colHeader: {
@@ -172,8 +173,9 @@ const [columns, setColumns] = useState([
           textToHighlight = {rowData.Query}
           findChunks={findChunksAtBeginningOfWords}
           highlightStyle={
-            {"background-color": rowData.Query.startsWith('@') ? '#FFFF33' : '#32CD32',
-            "font-weight": "bold",
+            {"color": rowData.Query.startsWith('@') ? '#f2d273' : '#32CD32',
+            "background-color": 'transparent' ,
+            "font-weight": "900",
             "text-transform": "uppercase"
 
               }}
