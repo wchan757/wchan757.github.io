@@ -26,7 +26,7 @@ import Highlighter from "react-highlight-words";
 import { makeStyles } from '@material-ui/core/styles';
 //import SyntaxHighlighter from 'react-syntax-highlighter';
 //import { sql } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-// import { SparkSQL } from 'dt-sql-parser';
+import { SparkSQL } from 'dt-sql-parser';
 
 // const useStyles = makeStyles({
 //   colHeader: {
