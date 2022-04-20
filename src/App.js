@@ -27,8 +27,6 @@ import { makeStyles } from '@material-ui/core/styles';
 // import SyntaxHighlighter from 'react-syntax-highlighter';
 // import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 //import { sql } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { SparkSQL } from 'dt-sql-parser';
-
 // const parser = new SparkSQL();
 
 // const useStyles = makeStyles({
@@ -49,10 +47,30 @@ import { SparkSQL } from 'dt-sql-parser';
 
 
 const BasicTable = () => {
-  const parser = require('js-sql-parser');
-  const ast = parser.parse('select fucker');
 
-console.log(JSON.stringify(ast, null, 2));
+  var url = "https://extendsclass.com/sql-syntax-tester";
+
+var xhr = new XMLHttpRequest();
+xhr.open("POST", url);
+
+xhr.setRequestHeader("Access-Control-Allow-Origin", "https://extendsclass.com");
+xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, DELETE, HEAD, OPTIONS");
+xhr.setRequestHeader("Content-Type", "text/plain");
+xhr.setRequestHeader("Access-Control-Allow-Credentials", "true");
+xhr.setRequestHeader("referer", "https://extendsclass.com/sql-validator.html");
+
+
+xhr.onreadystatechange = function () {
+   if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      console.log(xhr.responseText);
+   }};
+
+var dataer = "fucker";
+
+xhr.send(dataer);
+
+
 
   const findChunksAtBeginningOfWords = ({
     autoEscape,
