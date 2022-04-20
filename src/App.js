@@ -24,9 +24,12 @@ import * as XLSX from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
 import Highlighter from "react-highlight-words";
 import { makeStyles } from '@material-ui/core/styles';
-//import SyntaxHighlighter from 'react-syntax-highlighter';
+// import SyntaxHighlighter from 'react-syntax-highlighter';
+// import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 //import { sql } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { SparkSQL } from 'dt-sql-parser';
+
+// const parser = new SparkSQL();
 
 // const useStyles = makeStyles({
 //   colHeader: {
@@ -46,6 +49,10 @@ import { SparkSQL } from 'dt-sql-parser';
 
 
 const BasicTable = () => {
+  const parser = require('js-sql-parser');
+  const ast = parser.parse('select fucker');
+
+console.log(JSON.stringify(ast, null, 2));
 
   const findChunksAtBeginningOfWords = ({
     autoEscape,
@@ -167,6 +174,9 @@ const [columns, setColumns] = useState([
       )},
       render : rowData => {
       return (
+    //     <SyntaxHighlighter language="sql" style={docco} showLineNumbers ={true}>
+    //   {rowData.Query}
+    // </SyntaxHighlighter>
         <Highlighter
         autoEscape = {true}
           searchWords={keyword_highlight}
