@@ -23,6 +23,7 @@ import Button from '@material-ui/core/Button';
 import * as XLSX from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
 import Highlighter from "react-highlight-words";
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 // import SyntaxHighlighter from 'react-syntax-highlighter';
 // import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -47,31 +48,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 const BasicTable = () => {
-
-  var url = "https://extendsclass.com/sql-syntax-tester";
-
-var xhr = new XMLHttpRequest();
-xhr.open("POST", url);
-
-xhr.setRequestHeader("Access-Control-Allow-Origin", "https://extendsclass.com");
-xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, DELETE, HEAD, OPTIONS");
-xhr.setRequestHeader("Content-Type", "text/plain");
-xhr.setRequestHeader("Access-Control-Allow-Credentials", "true");
-xhr.setRequestHeader("referer", "https://extendsclass.com/sql-validator.html");
-
-
-xhr.onreadystatechange = function () {
-   if (xhr.readyState === 4) {
-      console.log(xhr.status);
-      console.log(xhr.responseText);
-   }};
-
-var dataer = "fucker";
-
-xhr.send(dataer);
-
-
-
+  
   const findChunksAtBeginningOfWords = ({
     autoEscape,
     caseSensitive,
@@ -284,7 +261,7 @@ const ExportOption = () => {
   var temp_query = '.'
 
   //export the master file
-  var test = ExportMaster()
+  var test = ExportMaster('install')
 
   return 
 // console.log(export_data)
@@ -367,7 +344,7 @@ const ExportOption = () => {
 
   }
 
-  const ExportMaster = () => {
+  const ExportMaster = (job_type) => {
     let master_export = [...data]
     let template_query = []
     let template_json = {}
@@ -447,12 +424,16 @@ const ExportOption = () => {
   template_json['template_query'] = template_query
   //console.log(template_json)
   const fileData = JSON.stringify(template_json);
+  if (job_type == 'install')
+  {
   const blob = new Blob([fileData], {type: "text/plain"});
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.download = 'master.json';
   link.href = url;
-  link.click();
+  link.click()
+  }
+  else{return fileData}
 
 }
 
@@ -465,7 +446,23 @@ const ExportOption = () => {
   // console.log(export_json)
   // //console.log(counter)
 
- 
+  const QueryChecker = (event) => {
+
+
+    const sqlurl = "https://extendsclass.com/sql-syntax-tester"
+    const js_return = JSON.parse(ExportMaster('validate'))
+    let text = js_return['@bu_query']['WTCTW'].join(' ')
+
+
+    axios.post(sqlurl, text, {
+      headers: { 'Content-Type': 'text/plain',
+    }
+    }).then(res => {
+      console.log(res.data);
+    });
+    event.preventDefault();
+  };
+
 const bu_specific = (e , rowData) => {
     previous_action([...data])
     let _data = [...data]
@@ -1133,6 +1130,15 @@ const lastpage = () => {
         position : 'toolbar'
 
       },
+
+      {icon: tableIcons.ViewColumn,
+        tooltip: "Query Validate",
+        iconProps: { style: { fontSize: "6px", color: "green" } },
+          onClick: QueryChecker,
+          //,isFreeAction:true
+          position : 'toolbar'
+  
+        },
       // icons={{Edit: () => <EditOutlinedIcon style={{ color: "grey" }}/>,
 
       {icon:() => <AddCircleOutlineRoundedIcon style = {{color:"black"}}/>,
