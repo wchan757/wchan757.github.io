@@ -24,6 +24,7 @@ import * as XLSX from 'xlsx/xlsx.mjs';
 import {zip} from 'pythonic';
 import Highlighter from "react-highlight-words";
 import axios from 'axios';
+import { uniqueNamesGenerator, Config, adjectives, colors, animals } from 'unique-names-generator';
 import { makeStyles } from '@material-ui/core/styles';
 // import SyntaxHighlighter from 'react-syntax-highlighter';
 // import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -83,7 +84,7 @@ const BasicTable = () => {
       const swLow = sw.toLowerCase();
       // Do it for every single text word
       singleTextWordsWithPos.forEach(s => {
-        if (s.word == swLow || s.word.startsWith('@') || s.word.startsWith(swLow + '(') ) {
+        if (s.word == swLow  || s.word.startsWith(swLow + '(') ) {
           const start = s.index;
           const end = s.index + swLow.length;
           chunks.push({
@@ -91,7 +92,19 @@ const BasicTable = () => {
             end
           });
         }
+        else if (s.word.startsWith('@'))
+        {
+          const start = s.index;
+          const end = s.index + s.word.length;
+          chunks.push({
+            start,
+            end
+          });
+        }
+
+        
       });
+
   
       // The complete word including whitespace should also be handled, e.g.
       // searchWord='Angela Mer' should be highlighted in 'Angela Merkel'
@@ -161,8 +174,8 @@ const [columns, setColumns] = useState([
       return(
     <TextField
       //type="numeric"
-      //fullWidth={true}
       multiline={true}
+      fullWidth={true}
       value={display}
       onChange={e => props.onChange(e.target.value)}
     />
@@ -173,7 +186,7 @@ const [columns, setColumns] = useState([
     //   {rowData.Query}
     // </SyntaxHighlighter>
         <Highlighter
-        autoEscape = {true}
+        //autoEscape = {true}
           searchWords={keyword_highlight}
           textToHighlight = {rowData.Query}
           findChunks={findChunksAtBeginningOfWords}
@@ -471,6 +484,9 @@ const bu_specific = (e , rowData) => {
     let id_list = []
     let obj = undefined
     let temp_str = ''
+
+    const randomName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, animals] });
+
     while (obj != undefined){
       random_id = Math.floor(Math.random() * 1000000);
       obj = id_list.find(element => element == random_id);
@@ -479,11 +495,11 @@ const bu_specific = (e , rowData) => {
         
       }
     }
-    _data.push({ id : random_id ,Query: "-",BU:'-',parentid : mum_id})
+    _data.push({ id : random_id ,Query: rowData.Query, BU:'Others',parentid : mum_id})
     for (let data_number in _data)
     {temp_str = _data[data_number].Query
       if (_data[data_number].id == mum_id &  _data[data_number].Query.includes('@') != true)
-      {_data[data_number].Query = '@' + temp_str}
+      {_data[data_number].Query = '@' + randomName}
 
     }
     //rowData = [rowData]
@@ -1197,8 +1213,8 @@ const lastpage = () => {
           {...props}
           draggable= "true"
           onDoubleClick={e => {
-            //console.log(props.data);
-            props.actions[4]().onClick(e, props.data);
+            console.log(props.actions);
+            props.actions[5]().onClick(e, props.data);
             //alert("Make row editable");
           }}
           // onKeyUp={event => {
