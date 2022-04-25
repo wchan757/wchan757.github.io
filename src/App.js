@@ -173,11 +173,48 @@ const [columns, setColumns] = useState([
       else {display = props.value}
       return(
     <TextField
-      //type="numeric"
+    {...props}
+    
+    //type="numeric"
+      //autoFocus="autofocus"
       multiline={true}
       fullWidth={true}
-      value={display}
-      onChange={e => props.onChange(e.target.value)}
+      //value={display}
+      //defaultValue={display}
+      // autofocus = {true}
+      // isFocused = {false}
+      // currentValue = {display}
+      
+     // onKeyDown={e => e.tar
+      //onKeyDown={console.log(myTableDiv)}
+      onKeyDown={e => 
+        
+        {
+         props.onChange(e.keyCode == 9 ? 
+      e.target.value.slice(0,e.target.selectionStart) +"  "+ e.target.value.slice(e.target.selectionStart,e.target.value.length) 
+      :
+      e.target.value);
+          // e.target.setSelectionRange(e.target.selectionEnd,e.target.selectionEnd)
+      e.keyCode == 9 ? e.preventDefault() : e.cancelable = true
+      // e.preventDefault();preventDefault
+      //e.stopImmediatePropagation();
+      // e.key == 'Tab' ? e.target.selectionEnd = e.target.selectionStart+100 : e.cancelable = true
+
+
+
+
+      //e.target.selectionStart = 0;
+
+
+    }
+   }
+  //  onFocus={(e) => {
+  //    e.target.selectionStart = e.target.selectionStart + 2
+  //    console.log(1)
+  // }}
+      
+      onChange={e => {props.onChange(e.target.value);      
+      }}
     />
       )},
       render : rowData => {
