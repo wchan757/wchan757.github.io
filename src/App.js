@@ -1,4 +1,4 @@
-import MaterialTable,{MTableBodyRow} from "@material-table/core";
+import MaterialTable,{MTableBodyRow,MTableEditField,MTableEditRow} from "@material-table/core";
 //import MaterialTable,{MTableBodyRow} from "material-table";
 import CircularProgress from "@material-ui/core/CircularProgress";
 //import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -49,6 +49,20 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 const BasicTable = () => {
+
+  const useStyles = makeStyles({
+    tableRow: {
+      // "border": "1px solid black",
+      // "color": "white",
+      // "width": "calc(682.5px)",
+      // "box-sizing": "border-box",
+      // "font-size":"12px"
+
+      
+    }
+  });
+  const classes = useStyles();
+
   
   const findChunksAtBeginningOfWords = ({
     autoEscape,
@@ -165,8 +179,11 @@ const [data, setData] = useState([
 ]);
 
 const [columns, setColumns] = useState([
-  { title: "Query", field: "Query",editable:'always', cellStyle: {
-    color: "black"},
+  { title: "Query", field: "Query",editable:'always', 
+  // cellStyle: {
+  //   "color": "green",
+  //   "width": "calc(682.5px)",
+  //   "box-sizing": "border-box"},
     editComponent: props => {
       let display = ''
       if (props.value.includes('@')){display = props.value.replace('@','')}
@@ -174,10 +191,16 @@ const [columns, setColumns] = useState([
       return(
     <TextField
     {...props}
+    InputProps={{ style: 
+      { fontSize: 12
+                 } }}
     
     //type="numeric"
       //autoFocus="autofocus"
+      size = "small"
       multiline={true}
+      Margin = "dense"
+      // style = {{'font-size': '6px'}}
       fullWidth={true}
       //value={display}
       //defaultValue={display}
@@ -881,6 +904,16 @@ const lastpage = () => {
 
 }
         }
+       
+      //   cellEditable={{
+      //     cellStyle: {},
+      //     onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+      //         return new Promise((resolve, reject) => {
+      //             console.log('newValue: ' + newValue);
+      //             setTimeout(resolve, 4000);
+      //         });
+      //     }
+      // }}
 
   // icons={{
   //   Edit: () => <EditIcon style={{ color: "orange" }} />,
@@ -1004,9 +1037,10 @@ const lastpage = () => {
   // icons={}
   onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
   options={{
-    actionsCellStyle: {
-      color: 'black',
-      },
+    // actionsCellStyle: {
+    //   'font-size': '12px',
+    //   color: 'black',
+    //   },
       loadingType:'linear',
     tableLayout: 'auto',
     //searchAutoFocus : true,
@@ -1248,6 +1282,7 @@ const lastpage = () => {
       Row: (props) => (
         <MTableBodyRow
           {...props}
+          //className={classes.tableRow}
           draggable= "true"
           onDoubleClick={e => {
             console.log(props.actions);
@@ -1313,6 +1348,8 @@ const lastpage = () => {
 
         
       ),
+      EditField: props => <MTableEditField {...props} className={classes.tableRow} />,
+
       
     }
   }
