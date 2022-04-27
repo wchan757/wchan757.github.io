@@ -1,5 +1,6 @@
 import MaterialTable,{MTableBodyRow,MTableEditField,MTableEditRow} from "@material-table/core";
-//import MaterialTable,{MTableBodyRow} from "material-table";
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 import CircularProgress from "@material-ui/core/CircularProgress";
 //import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import tableIcons from "./MaterialTableIcons.js";
@@ -7,6 +8,7 @@ import keyword_highlight from "./keyword_highlight.js";
 import React ,{ useState,useEffect } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import FormControl from '@mui/material/FormControl';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
@@ -21,6 +23,7 @@ import TextField from "@material-ui/core/TextField";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import * as XLSX from 'xlsx/xlsx.mjs';
+import InputBase from '@mui/material/InputBase';
 import {zip} from 'pythonic';
 import Highlighter from "react-highlight-words";
 import axios from 'axios';
@@ -178,6 +181,7 @@ const [data, setData] = useState([
 
 ]);
 
+
 const [columns, setColumns] = useState([
   { title: "Query", field: "Query",editable:'always', 
   // cellStyle: {
@@ -189,17 +193,20 @@ const [columns, setColumns] = useState([
       if (props.value.includes('@')){display = props.value.replace('@','')}
       else {display = props.value}
       return(
+      // <FormControl  {...props} margin = "none" size="small" fullWidth = "false" style={{heighr:"50%"}}>
+      // <TableCell size ="small" style={{"height":"6"}} overflow = "true">
     <TextField
     {...props}
+    padding = 'normal'
     InputProps={{ style: 
-      { fontSize: 12
+      { fontSize: '12px',
                  } }}
     
     //type="numeric"
       //autoFocus="autofocus"
       size = "small"
       multiline={true}
-      Margin = "dense"
+      Margin = "none"
       // style = {{'font-size': '6px'}}
       fullWidth={true}
       //value={display}
@@ -238,7 +245,10 @@ const [columns, setColumns] = useState([
       
       onChange={e => {props.onChange(e.target.value);      
       }}
-    />
+      
+    /> 
+      // </TableCell >
+
       )},
       render : rowData => {
       return (
