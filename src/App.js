@@ -54,7 +54,10 @@ import { makeStyles } from '@material-ui/core/styles';
 const BasicTable = () => {
 
   const useStyles = makeStyles({
-    tableRow: {
+    MuiTableCell: {
+      root :{ '&.Mui-selected': {
+        backgroundColor: "#f09628"}
+      }
       // "border": "1px solid black",
       // "color": "white",
       // "width": "calc(682.5px)",
@@ -194,10 +197,12 @@ const [columns, setColumns] = useState([
       else {display = props.value}
       return(
       // <FormControl  {...props} margin = "none" size="small" fullWidth = "false" style={{heighr:"50%"}}>
-      // <TableCell size ="small" style={{"height":"6"}} overflow = "true">
+      // <TableCell size ="small" style={{"border-bottom": "none"}} >
+            //   <TableCell size ="small" sx={{height:"12px",padding:"none",boxSizing: "none",stickyHeader:'true'
+            // }} >
     <TextField
     {...props}
-    padding = 'normal'
+    padding = 'none'
     InputProps={{ style: 
       { fontSize: '12px',
                  } }}
@@ -205,6 +210,7 @@ const [columns, setColumns] = useState([
     //type="numeric"
       //autoFocus="autofocus"
       size = "small"
+      // sx={{padding : "6px 16px 6px 16px"}}
       multiline={true}
       Margin = "none"
       // style = {{'font-size': '6px'}}
@@ -247,6 +253,7 @@ const [columns, setColumns] = useState([
       }}
       
     /> 
+    
       // </TableCell >
 
       )},
@@ -1051,6 +1058,7 @@ const lastpage = () => {
     //   'font-size': '12px',
     //   color: 'black',
     //   },
+    // overflowY: "false",
       loadingType:'linear',
     tableLayout: 'auto',
     //searchAutoFocus : true,
@@ -1167,11 +1175,10 @@ const lastpage = () => {
     }}
 
 
-    localization={{
-      header : {
-         actions: 'Actions'
-      }
-    }}
+    localization={{ body: { editRow: { deleteText: 'Customized Delete Message',
+    style: { fontSize: "6px", color: "green" } } } }}
+
+    
 
     // localization={{
     //   toolbar: {
@@ -1358,7 +1365,16 @@ const lastpage = () => {
 
         
       ),
-      EditField: props => <MTableEditField {...props} className={classes.tableRow} />,
+      EditRow: props => (<MTableEditRow {...props}  
+      className={classes.MuiTableCell} />)
+      
+
+
+    // EditField: props => <MTableEditField {...props}  style= {{
+    //   boxShadow: "none",
+    //   boxSizing: "none",
+    //   padding: "0px",
+    // } }/>,
 
       
     }
