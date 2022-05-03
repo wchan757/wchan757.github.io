@@ -1366,7 +1366,7 @@ const lastpage = () => {
 
         
       ),
-      EditRow: props => (<MTableEditRow {...props}  
+      EditRow: props => (<MTableEditRow {...props} 
       className={classes.MuiTableCell} />)
       
 
