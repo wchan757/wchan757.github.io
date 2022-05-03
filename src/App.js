@@ -6,6 +6,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import tableIcons from "./MaterialTableIcons.js";
 import keyword_highlight from "./keyword_highlight.js";
 import React ,{ useState,useEffect } from 'react';
+import './App.scss';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import FormControl from '@mui/material/FormControl';
@@ -53,20 +54,32 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const BasicTable = () => {
 
-  const useStyles = makeStyles({
-    MuiTableCell: {
-      root :{ '&.Mui-selected': {
-        backgroundColor: "#f09628"}
-      }
-      // "border": "1px solid black",
-      // "color": "white",
-      // "width": "calc(682.5px)",
-      // "box-sizing": "border-box",
-      // "font-size":"12px"
+  // const useStyles = makeStyles({
+  //   MuiTableCell: {
+  //     root :{ '&.Mui-selected': {
+  //       backgroundColor: "#f09628"}
+  //     }
+  //     // "border": "1px solid black",
+  //     // "color": "white",
+  //     // "width": "calc(682.5px)",
+  //     // "box-sizing": "border-box",
+  //     // "font-size":"12px"
 
       
+  //   }
+  // });
+  const useStyles = makeStyles({
+    tableRow: {
+      '& td': {
+        "flex-basis": "0",
+        "box-sizing":"none",
+                fontsize: "12",
+                padding:"none",
+                overflow : true
+      }
     }
   });
+
   const classes = useStyles();
 
   
@@ -213,7 +226,7 @@ const [columns, setColumns] = useState([
       //autofocus = 'false'
       // sx={{padding : "6px 16px 6px 16px"}}
       multiline={true}
-      Margin = "none"
+      Margin = "dense"
       // style = {{'font-size': '6px'}}
       fullWidth={true}
       //value={display}
@@ -819,7 +832,7 @@ const importExcel =(e) =>{
         )
         }
       }
-
+ 
       }
       setData(query_list)
     }
@@ -913,7 +926,7 @@ const lastpage = () => {
 
   <MaterialTable 
   title="Query Editior" 
-  style={{ width: "100%", margin: "0%"}}
+  style={{ width: "100%", margin: "0%",fontsize :"12px"}}
   icons={{Edit: () => <EditOutlinedIcon  style={{ color: "black" }}/>,
           Delete: () => <RemoveCircleOutlineRoundedIcon  style={{ color: "black" }} />,
           Check: () => <CheckCircleOutlineRoundedIcon  style = {{color :'black',"margin-left": "30px"}}/>,
@@ -1176,7 +1189,7 @@ const lastpage = () => {
     }}
 
 
-    localization={{ body: { editRow: { deleteText: 'You Sure?',fontSize:"10p"}}}}
+    localization={{ body: { editRow: { deleteText: 'You Sure?',fontSize:"10px"}}}}
 
     
 
@@ -1365,8 +1378,8 @@ const lastpage = () => {
 
         
       ),
-      EditRow: props => (<MTableEditRow {...props} 
-      className={classes.MuiTableCell} />)
+              // EditRow: props => <MTableEditRow {...props} className={classes.tableRow} />,
+
       
 
 

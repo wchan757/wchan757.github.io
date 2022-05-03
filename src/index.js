@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
+// import './App.scss';
 import BasicTable from './App'
 //import Highlighter from "react-highlight-words";
 

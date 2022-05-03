@@ -14,12 +14,36 @@ code {
 
 .MuiTable-root {
   td {
-    max-height: 1;
+    & > span {
+      display: inline-flex;
+      margin: dense;
+      flex-wrap: wrap;
+      align-items: center;
+      //max-height: 1.45rem;
+      min-height: 1.75rem;
+
+    }
   }
 }
-.MuiTypography-root {
-  h6 {
-    font-size: 8px;
-  }
-  
-}
+// .MuiFormControl-root {
+//   border: 0;
+//   margin: 0;
+//   display: inline-flex;
+//   padding: 0;
+//   position: relative;
+//   min-width: 0;
+//   flex-direction: column;
+//   vertical-align: bottom;
+// }
+// .MuiTable-root {
+//   td {
+//     max-height: 50%;
+//   }
+// }
+// .td.MuiTypography-h6 {
+//   // font-size: 14rem;
+//   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+//   font-weight: 500;
+//   line-height: 1.6;
+//   letter-spacing: 0.0075em;
+// }
