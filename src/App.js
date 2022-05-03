@@ -1176,8 +1176,7 @@ const lastpage = () => {
     }}
 
 
-    localization={{ body: { editRow: { deleteText: 'Customized Delete Message',
-    style: { fontSize: "6px", color: "green" } } } }}
+    localization={{ body: { editRow: { deleteText: 'You Sure?',fontSize:"10p"}}}}
 
     
 
