@@ -210,6 +210,7 @@ const [columns, setColumns] = useState([
     //type="numeric"
       //autoFocus="autofocus"
       size = "small"
+      autofocus = 'false'
       // sx={{padding : "6px 16px 6px 16px"}}
       multiline={true}
       Margin = "none"
