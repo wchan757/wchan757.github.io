@@ -8,27 +8,27 @@ import keyword_highlight from "./keyword_highlight.js";
 import React ,{ useState,useEffect } from 'react';
 import './App.scss';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import FormControl from '@mui/material/FormControl';
+// import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+// import FormControl from '@mui/material/FormControl';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+// import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+// import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import CallSplitRoundedIcon from '@mui/icons-material/CallSplitRounded';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
-import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
+// import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
+// import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import TextField from "@material-ui/core/TextField";
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import * as XLSX from 'xlsx/xlsx.mjs';
-import InputBase from '@mui/material/InputBase';
+// import Box from '@material-ui/core/Box';
+// import Button from '@material-ui/core/Button';
+// import * as XLSX from 'xlsx/xlsx.mjs';
+// import InputBase from '@mui/material/InputBase';
 import {zip} from 'pythonic';
 import Highlighter from "react-highlight-words";
 import axios from 'axios';
-import { uniqueNamesGenerator, Config, adjectives, colors, animals } from 'unique-names-generator';
+import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import { makeStyles } from '@material-ui/core/styles';
 // import SyntaxHighlighter from 'react-syntax-highlighter';
 // import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -51,8 +51,16 @@ import { makeStyles } from '@material-ui/core/styles';
 //TODO:
 //Add CircularPogress for row editining
 
+// const tableRef: RefObject = createRef();
+
+// // Call this whenever you need editing to be reset
+// if (tableRef.current) tableRef.current.dataManager.changeRowEditing();
+
 
 const BasicTable = () => {
+
+  // DataManager.defaultExpanded  = true
+
 
   // const useStyles = makeStyles({
   //   MuiTableCell: {
@@ -925,7 +933,8 @@ const lastpage = () => {
     <input type ='file' onChange ={importExcel}/>
 
   <MaterialTable 
-  title="Query Editior" 
+  title="Query Editior"
+  defaultExpanded = "true"
   style={{ width: "100%", margin: "0%",fontsize :"12px"}}
   icons={{Edit: () => <EditOutlinedIcon  style={{ color: "black" }}/>,
           Delete: () => <RemoveCircleOutlineRoundedIcon  style={{ color: "black" }} />,
@@ -957,16 +966,27 @@ const lastpage = () => {
   //       this.props.onTreeExpandChange(data, data.tableData.isTreeExpanded)
   //   })}}
 
+  // const tableRef = useRef(null)
+
+  // useEffect(() => {
+  //       tableRef.current.dataManager.changePageSize(newPageSIze)
+  //  }, [])
+ 
+
     editable = {{onRowUpdate:(newValue, oldValue) =>
       new Promise((resolve, reject) => {
         setTimeout(() => {
-          console.log(data)
+          //console.log(data)
+          oldValue.tableData.isTreeExpanded = true
           let dataUpdate = [...data];
           let row_table = [...data];
           let range = [...Array(row_table.length).keys()];
           let target_id = newValue.id
           let pass_index = ''
           let newValue_check = newValue
+          console.log(oldValue)
+          // parent.tableData.isTreeExpanded = true;
+
           
           for (const[first , second] of zip(row_table , range))
             if (first.id == target_id)
@@ -974,7 +994,7 @@ const lastpage = () => {
               break
             }
           
-          console.log(oldValue)
+          //console.log(oldValue)
 
           if (oldValue.Query.startsWith('@')==true)
           {newValue_check.Query = newValue.Query.replace('@','');
@@ -1073,6 +1093,7 @@ const lastpage = () => {
     //   color: 'black',
     //   },
     // overflowY: "false",
+    // defaultExpanded:true,
       loadingType:'linear',
     tableLayout: 'auto',
     //searchAutoFocus : true,
@@ -1130,9 +1151,9 @@ const lastpage = () => {
             //console.log(rowData)
             var data = rowData.tableData.isTreeExpanded == true
             //console.log(rowData)
-            let styles = { transition: 'transform 300ms' };
-            const levels = rowData.tableData.path.length === 1 ? 0 : rowData.tableData.path.length;
-            styles = { ...styles, '--left-before': `${levels * 6}px` };
+            //let styles = { transition: 'transform 300ms' };
+            //const levels = rowData.tableData.path.length === 1 ? 0 : rowData.tableData.path.length;
+            //styles = { ...styles, '--left-before': `${levels * 6}px` };
             //console.log([...rowData])
             //for (let temp_data in rowData)
             //{console.log(rowData[temp_data])}
@@ -1408,4 +1429,4 @@ export default BasicTable
 
 
 
-  
+// https://github.com/mbrn/material-table/issues/1735
