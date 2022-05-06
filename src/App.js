@@ -59,6 +59,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const BasicTable = () => {
 
+  // const [placeholder, setPlaceholder] = useState(0);
+
+  // const forceUpdate = () => {
+  //   setPlaceholder(o => o + 1);
+  // }
+
   // DataManager.defaultExpanded  = true
 
 
@@ -934,7 +940,6 @@ const lastpage = () => {
 
   <MaterialTable 
   title="Query Editior"
-  defaultExpanded = "true"
   style={{ width: "100%", margin: "0%",fontsize :"12px"}}
   icons={{Edit: () => <EditOutlinedIcon  style={{ color: "black" }}/>,
           Delete: () => <RemoveCircleOutlineRoundedIcon  style={{ color: "black" }} />,
@@ -977,7 +982,7 @@ const lastpage = () => {
       new Promise((resolve, reject) => {
         setTimeout(() => {
           //console.log(data)
-          oldValue.tableData.isTreeExpanded = true
+          // oldValue.tableData.isTreeExpanded = true
           let dataUpdate = [...data];
           let row_table = [...data];
           let range = [...Array(row_table.length).keys()];
@@ -1095,6 +1100,7 @@ const lastpage = () => {
     // overflowY: "false",
     // defaultExpanded:true,
       loadingType:'linear',
+      defaultExpanded : true,
     tableLayout: 'auto',
     //searchAutoFocus : true,
     headerSelectionProps: {
@@ -1303,6 +1309,8 @@ const lastpage = () => {
         <CallSplitRoundedIcon
          style = {{color:color_type}}/>
         )},
+
+        
         
                     
           // icon: tableIcons.DetailPanel,
@@ -1314,7 +1322,21 @@ const lastpage = () => {
           onClick: bu_specific,
             //isLoading: true,
             disabled : rowData.tableData.childRows != null
-          })
+          }),
+
+          // rowData2 => ({
+          //   icon: "Edit",
+          //   tooltip: "Edit row",
+          //   onClick: (event, rowData) => {
+          //     rowData.tableData.onTreeExpandChange = true;
+          //     rowData.tableData.editing = 'update'
+          //     // rowData.tableData.isTreeExpanded = true
+          //     console.log(rowData)
+
+          //     alert(`\r\n***ROWDATA AFTER CLICKING EDIT***:\r\n\r\n${JSON.stringify(rowData, null, 2)}`);
+          //     forceUpdate();
+          //   }
+          // })
         
         // {icon: tableIcons.Edit,
         //   tooltip: "Edit",
@@ -1399,6 +1421,26 @@ const lastpage = () => {
 
         
       ),
+
+      // EditRow: props => {
+      //   return (
+      //     <MTableEditRow 
+      //       {...props}
+      //       onEditingCanceled={(mode, rowData) => {
+      //         rowData.tableData.editing = undefined;
+      //         // rowData.tableData.isTreeExpanded = true;
+      //         forceUpdate();
+      //       }}
+      //       onEditingApproved={(mode, newData, oldData) => {
+      //         const dataCopy = [...data];
+      //         const index = dataCopy.indexOf(oldData);
+      //         dataCopy[index] = newData;
+      //         setData(dataCopy);
+      //       }}
+      //     />
+      //   );
+      // }
+    
               // EditRow: props => <MTableEditRow {...props} className={classes.tableRow} />,
 
       
