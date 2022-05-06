@@ -1100,7 +1100,7 @@ const lastpage = () => {
     // overflowY: "false",
     // defaultExpanded:true,
       loadingType:'linear',
-      defaultExpanded : true,
+      //defaultExpanded : true,
     tableLayout: 'auto',
     //searchAutoFocus : true,
     headerSelectionProps: {

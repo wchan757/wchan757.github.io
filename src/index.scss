@@ -14,16 +14,37 @@ code {
 
 
 .MuiTypography-root.MuiTypography-h6 
-{font-size: 1rem;text-indent: 15px;}
+{font-size: 1.5rem;
+  text-indent: 15px;
+height:2.5rem;
+// padding-top:10px;
+// padding-bottom:10px
+// padding:10;
+
+text-align: left;
+//box-sizing: border-box;
+// min-height:1.75rem;
+
+}
 
 
 div.MTableToolbar-title-9 > h6.MuiTypography-root.MuiTypography-h6  
 {
-font-size: 1.25rem; text-indent: 0;
+font-size: 1.25rem; text-indent: 0
+
 }
 
 td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone.MuiTableCell-sizeSmall > div > span > button
 {display :table-cell}
+
+
+// MuiInputBase-input MuiInput-input MuiInputBase-inputMultiline MuiInput-inputMultiline MuiInputBase-inputMarginDense MuiInput-inputMarginDense
+// .MuiInputBase-input.MuiInput-input.MuiInputBase-inputMultiline.MuiInput-inputMultiline.MuiInputBase-inputMarginDense.MuiInput-inputMarginDense ::before
+// {height : 30px}
+
+
+
+
 
 
 // .MuiTableCell-root {
@@ -59,48 +80,59 @@ td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-paddingNone.MuiTableCell-siz
 
 
 
-// .MuiTable-root {
-//   td {
-//     & > span {
-//       display: inline-flex;
-//       margin: dense;
-//       flex-wrap: wrap;
-//       //       display: inline-flex;
+.MuiTable-root {
+  td {
+    & > span {
+      display: inline-flex;
+      margin: dense;
+      flex-wrap: wrap;
+      //       display: inline-flex;
 
-//       align-items: center;
-//       //max-height: 1.2rem;
-//       //height: 1.2rem;
+      align-items: center;
+      //max-height: 1.2rem;
+      //height: 1.2rem;
 
-//       // height: 1.2rem;
-//       //min-height: 1.75rem;
+      // height: 1.2rem;
+      min-height: 1.75rem;
 
-//     }
-//   }
-// }
+    }
+  }
+}
 
 
-
+// textarea{height : 12px}
 
 
 
 .MuiInputBase-root {
   //font: inherit;
-  display: inline-flex;
+  // display: inline-flex;
   //color: currentColor;
   //width: 100%;
   //border: 0;
-  font-size :8px;
-  align-items: center;
+  // font-size :8px;
+  //bottom: 10x;
+  //padding-top: -10px;
+  //align-items: right;
+  //size:"small";
   // text-indent : 15;
-  //font-weight: 900;
-  max-height: 1.2rem;
-  //margin: 'dense';
+  // font-weight: 900;
+  // line-height: 1.2rem;
+  //box-sizing: "border-box"  ;
+  // min-height: 1.2rem;
+    // max-height: 'calc(100% - 10px)';
+    //height : 1.2rem;
+    // multiline= {true}
+    // max-height : 8px;
+    // min-height : 4px
+  margin: 'dense';
   //size:"small";
   //display: block;
-  //padding: 6px 0 7px;
+  // padding: 0px 0 0px;
+  // padding-top : 0px
   //min-width: 0;
   //background: none;
-  //box-sizing: none;
+  // box-sizing: none;
   //animation-name: mui-auto-fill-cancel;
   //letter-spacing: inherit;
   //animation-duration: 100000ms;
