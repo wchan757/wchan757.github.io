@@ -941,7 +941,8 @@ const lastpage = () => {
   <MaterialTable 
   title="Query Editior"
   style={{ width: "100%", margin: "0%",fontsize :"12px"}}
-  icons={{Edit: () => <EditOutlinedIcon  style={{ color: "black" }}/>,
+  icons={{Edit: () => <EditOutlinedIcon  />,
+    //style={{ color: "black" }} />,
           Delete: () => <RemoveCircleOutlineRoundedIcon  style={{ color: "black" }} />,
           Check: () => <CheckCircleOutlineRoundedIcon  style = {{color :'black',"margin-left": "30px"}}/>,
           Clear: () => <CancelOutlinedIcon style = {{color :'black'}} />
@@ -978,7 +979,12 @@ const lastpage = () => {
   //  }, [])
  
 
-    editable = {{onRowUpdate:(newValue, oldValue) =>
+    editable = {{
+
+      isEditable: rowData => rowData.Query.startsWith('@') != true, // only name(a) rows would be editable
+
+      
+      onRowUpdate:(newValue, oldValue) =>
       new Promise((resolve, reject) => {
         setTimeout(() => {
           //console.log(data)
@@ -1307,8 +1313,11 @@ const lastpage = () => {
         {color_type = 'grey'}
         return(
         <CallSplitRoundedIcon
-         style = {{color:color_type}}/>
+         style = {{color:color_type,
+              background:'transparent'}}/>
         )},
+
+
 
         
         
@@ -1323,6 +1332,15 @@ const lastpage = () => {
             //isLoading: true,
             disabled : rowData.tableData.childRows != null
           }),
+
+          // rowData_2 => ({
+          //   icon: "Edit",
+          //   tooltip: "Edit row",
+          //   onClick: (event, rowData) => {
+          //     rowData.tableData.editing = 'update'
+          //   }
+          // })
+
 
           // rowData2 => ({
           //   icon: "Edit",
@@ -1359,7 +1377,7 @@ const lastpage = () => {
           draggable= "true"
           onDoubleClick={e => {
             console.log(props.actions);
-            props.actions[5]().onClick(e, props.data);
+            // props.actions[5]().onClick(e, props.data);
             //alert("Make row editable");
           }}
           // onKeyUp={event => {
