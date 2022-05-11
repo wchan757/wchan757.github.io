@@ -244,7 +244,7 @@ const [columns, setColumns] = useState([
       //autofocus = 'false'
       // sx={{padding : "6px 16px 6px 16px"}}
       multiline={true}
-      Margin = "dense"
+      Margin = "nomral"
       // style = {{'font-size': '6px'}}
       fullWidth={true}
 
