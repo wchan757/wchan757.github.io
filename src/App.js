@@ -5,7 +5,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 //import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import tableIcons from "./MaterialTableIcons.js";
 import keyword_highlight from "./keyword_highlight.js";
-import React ,{ useState,useEffect } from 'react';
+import React ,{ useState,useRef  } from 'react';
 import './App.scss';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
 // import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
@@ -211,6 +211,7 @@ const [data, setData] = useState([
 
 ]);
 
+let lasttime = ''
 
 const [columns, setColumns] = useState([
   { title: "Query", field: "Query",editable:'always', 
@@ -220,6 +221,8 @@ const [columns, setColumns] = useState([
   //   "box-sizing": "border-box"},
     editComponent: props => {
       let display = ''
+      // const textareaRef = useRef()
+      // const cursorPosition = 0
       if (props.value.includes('@')){display = props.value.replace('@','')}
       else {display = props.value}
       return(
@@ -227,6 +230,7 @@ const [columns, setColumns] = useState([
       // <TableCell size ="small" style={{"border-bottom": "none"}} >
             //   <TableCell size ="small" sx={{height:"12px",padding:"none",boxSizing: "none",stickyHeader:'true'
             // }} >
+ 
     <TextField
     {...props}
     padding = 'none'
@@ -243,23 +247,82 @@ const [columns, setColumns] = useState([
       Margin = "dense"
       // style = {{'font-size': '6px'}}
       fullWidth={true}
-      //value={display}
+
+      value={display}
+      // onBlur={() => textareaRef.current.setSelectionRange(cursorPosition, cursorPosition)}
+
       //defaultValue={display}
-      // autofocus = {true}
+      autofocus = {true}
       // isFocused = {false}
       // currentValue = {display}
       
      // onKeyDown={e => e.tar
       //onKeyDown={console.log(myTableDiv)}
+      onKeyUp={(e) => {
+        if (e.keyCode == 9)
+        {        
+        e.target.setSelectionRange(lasttime.length,lasttime.length)}}
+      }
+
+
       onKeyDown={e => 
         
-        {
-         props.onChange(e.keyCode == 9 ? 
-      e.target.value.slice(0,e.target.selectionStart) +"  "+ e.target.value.slice(e.target.selectionStart,e.target.value.length) 
-      :
-      e.target.value);
+        {let start = e.target.selectionStart
+         let end = e.target.selectionEnd
+         console.log(e.target)
+          if (e.keyCode == 9)
+
+          {lasttime = e.target.value.slice(0,e.target.selectionStart) +"    "
+            props.onChange(e.target.value.slice(0,e.target.selectionStart) +"    "+ e.target.value.slice(e.target.selectionStart,e.target.value.length)) 
+          e.target.setSelectionRange(1,1);
+          console.log(lasttime)
+          e.preventDefault()
+        }
+        // e.selectionStart = e.selectionEnd
+        // e.selectionEnd = start + 1
+          // let start = e.target.selectionStart
+          // let end = e.target.selectionEnd
+        // props.onChange(e.keyCode == 9 ? 
+        //   e.target.value.slice(0,e.target.selectionStart) +"    "+ e.target.value.slice(e.target.selectionStart,e.target.value.length) 
+        // // e.target.value.slice(0,e.target.selectionStart) +"    "+ e.target.value.slice(e.target.selectionStart,e.target.value.length) 
+        // :
+        // e.target.value
+        // );
+        // let end = e.target.selectionEnd
+        // console.log(e.target.selectionEnd)
+
+
+        // e.target.selectionStart = end
+        // e.keyCode == 9 ? e.preventDefault() : e.cancelable = true
+
+        //e.target.setSelectionRange(start,end)
+
+        // e.keyCode == 9 ? e.preventDefault() : e.cancelable = true
+        // e.target.setSelectionRange(e.target.selectionStart,e.target.selectionEnd)    
+
+
+        //console.log(e.target.setSelectionRange)
+        // e.focus()
+        // e.target.setSelectionRange(0, 1)    
+
+        // var start = e.selectionStart;
+        // var end = e.selectionEnd;
+
+        // e.selectionStart = e.selectionEnd = end + 1;
+
+
+
+       
           // e.target.setSelectionRange(e.target.selectionEnd,e.target.selectionEnd)
-      e.keyCode == 9 ? e.preventDefault() : e.cancelable = true
+        // e.keyCode == 9 ? e.preventDefault() : e.cancelable = true
+
+        // e.target.selectionStart = 0 
+        // e.target.selectionEnd = 0
+    
+        //console.log(textareaRef)
+        //textareaRef.current.setSelectionRange(e.target.selectionStart, e.target.selectionEnd)
+      
+
       // e.preventDefault();preventDefault
       //e.stopImmediatePropagation();
       // e.key == 'Tab' ? e.target.selectionEnd = e.target.selectionStart+100 : e.cancelable = true
@@ -272,10 +335,11 @@ const [columns, setColumns] = useState([
 
     }
    }
-  //  onFocus={(e) => {
-  //    e.target.selectionStart = e.target.selectionStart + 2
-  //    console.log(1)
-  // }}
+   onFocus={(e) => {
+     'none'
+    // e.target.setSelectionRange(10,1)    
+    //  console.log(1)
+  }}
       
       onChange={e => {props.onChange(e.target.value);      
       }}
