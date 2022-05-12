@@ -6,7 +6,7 @@ const keyword_highlight = [
     "INTO", "IS", "JOIN", "LEFT", "LIMIT", "MAX", "MIN", "NOT", "NULL", "ON", "OR", "OVERWRITE", "LIKE",
      "RLIKE", "UPPER", "LOWER", "REGEXP", "ORDER", "OUTER", "RIGHT", "SELECT", "SEMI", "STRING", "SUM", 
      "TABLE", "TIMESTAMP", "TRUE", "UNCACHE", "UNION", "WHERE", "INTERSECT", "EXCEPT", "SUBSTR", "SUBSTRING", 
-     "SQRT", "ABS","CAST","WITH","CROSS","CONCAT","THEN","WHEN","NVL","CASE","ELSE","END"
+     "SQRT", "ABS","CAST","WITH","CROSS","CONCAT","THEN","WHEN","NVL","CASE","ELSE","END","COALESCE"
 ]
 
 export default keyword_highlight

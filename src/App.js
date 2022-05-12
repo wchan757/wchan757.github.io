@@ -119,7 +119,7 @@ const BasicTable = () => {
     let fromIndex = 0;
     const singleTextWordsWithPos = singleTextWords.map(s => {
       const indexInWord = textLow.indexOf(s, fromIndex);
-      fromIndex = indexInWord+1;
+      fromIndex = indexInWord + s.length;
       return {
         word: s,
         index: indexInWord
@@ -171,7 +171,8 @@ const BasicTable = () => {
         });
       }
     });
-  // console.log(singleTextWords)
+  // console.log(singleTextWordsWithPos)
+  // console.log(textLow)
     return chunks;
   };
 const [isLoading, setIsLoading] = useState(false);
