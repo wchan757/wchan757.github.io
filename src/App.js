@@ -108,7 +108,7 @@ const BasicTable = () => {
     const textLow = textToHighlight.toLowerCase();
     // Match at the beginning of each new word
     // New word start after whitespace or - (hyphen)
-    const sep = /[-\s]+/;
+    const sep = /[-\s,()]+/;
   
     // Match at the beginning of each new word
     // New word start after whitespace or - (hyphen)
@@ -119,7 +119,7 @@ const BasicTable = () => {
     let fromIndex = 0;
     const singleTextWordsWithPos = singleTextWords.map(s => {
       const indexInWord = textLow.indexOf(s, fromIndex);
-      fromIndex = indexInWord;
+      fromIndex = indexInWord+1;
       return {
         word: s,
         index: indexInWord
@@ -131,9 +131,16 @@ const BasicTable = () => {
       const swLow = sw.toLowerCase();
       // Do it for every single text word
       singleTextWordsWithPos.forEach(s => {
-        if (s.word == swLow  || s.word.startsWith(swLow + '(') ) {
+        // console.log(s.word)
+        // if (s.word == swLow  || s.word.startsWith(swLow + '(') ) {
+          if (s.word == swLow )  {
+
+          // console.log(s.word)
+          // console.log(swLow)
+
+
           const start = s.index;
-          const end = s.index + swLow.length;
+          const end = s.index + s.word.length;
           chunks.push({
             start,
             end
@@ -164,7 +171,7 @@ const BasicTable = () => {
         });
       }
     });
-  
+  // console.log(singleTextWords)
     return chunks;
   };
 const [isLoading, setIsLoading] = useState(false);
