@@ -108,7 +108,7 @@ const BasicTable = () => {
     const textLow = textToHighlight.toLowerCase();
     // Match at the beginning of each new word
     // New word start after whitespace or - (hyphen)
-    const sep = /[-\s,()]+/;
+    const sep = /[-\s(),]+/;
   
     // Match at the beginning of each new word
     // New word start after whitespace or - (hyphen)
@@ -171,7 +171,7 @@ const BasicTable = () => {
         });
       }
     });
-  // console.log(singleTextWordsWithPos)
+  //  console.log(singleTextWordsWithPos)
   // console.log(textLow)
     return chunks;
   };
@@ -363,17 +363,42 @@ const [columns, setColumns] = useState([
     //   {rowData.Query}
     // </SyntaxHighlighter>
         <Highlighter
-        //autoEscape = {true}
+        autoEscape = {true}
+        className = {"modify"}
           searchWords={keyword_highlight}
           textToHighlight = {rowData.Query}
           findChunks={findChunksAtBeginningOfWords}
           highlightStyle={
             {"color": rowData.Query.startsWith('@') ? '#f2d273' : '#32CD32',
             "background-color": 'transparent' ,
+            // 'display': 'normal',
+            //"white-space": "pre-wrap",
+            'font-size' :'12px',
+            // autoEscape:true,
+            //"text-indent":"",
             "font-weight": "900",
-            "text-transform": "uppercase"
+            "text-transform": "uppercase",
+            // 'max-width':'20pt',
+            //'word-wrap': 'break-word'
 
               }}
+          unhighlightStyle={
+            { //"background-color": 'transparent' ,
+            //'word-wrap': 'break-word',
+            //"white-space": "pre",
+            //'display': 'inline-block',
+            'font-size' :'12px',
+            //'display':'block',
+            // "white-space": "pre",
+            // autoEscape:true,
+            //"text-indent":"",
+            "font-weight": "900",
+            //"text-transform": "uppercase"
+              // autoEscape : true
+               //"white-space": "normal",
+
+            // "white-space": "normal",
+          }}
 
         />
       );
@@ -1249,7 +1274,7 @@ const lastpage = () => {
 
               //...styles,
               //padding : 'dense',
-              'text-indent': '20px',
+              // 'text-indent': '20px',
               'font-size': '12px',
               'white-space':'pre',
 
