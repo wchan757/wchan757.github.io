@@ -222,7 +222,11 @@ const [data, setData] = useState([
 let lasttime = ''
 
 const [columns, setColumns] = useState([
-  { title: "Query", field: "Query",editable:'always', 
+  { title: "Query", field: "Query",
+  
+// isEditable: rowData => rowData.Query.startsWith('@') != true,
+
+  // editable: (columne_meta,colum_value) => colum_value.Query.startsWith('@') != true,
   // cellStyle: {
   //   "color": "green",
   //   "width": "calc(682.5px)",
@@ -408,6 +412,7 @@ const [columns, setColumns] = useState([
   },
   { title: "BU", field: "BU"   
   ,textAlign: "centre",
+  editable: (column_meta,row_value) => row_value.parentid != 'no',
   lookup: {
           None:'',
           Others:"Others",
@@ -1078,21 +1083,100 @@ const lastpage = () => {
 
     editable = {{
 
-      isEditable: rowData => rowData.Query.startsWith('@') != true, // only name(a) rows would be editable
+      // isEditable: rowData => rowData.Query.startsWith('@') != true, // only name(a) rows would be editable
+      isEditable: (rowData) => {try {if (rowData.Query.startsWith('@')!=true)
+      {return 'always'}} 
+      catch{return}
+      finally{}
+      },
+     
+      
+      
+      
+      // rowData.Query != undefined,
 
       
       onRowUpdate:(newValue, oldValue) =>
       new Promise((resolve, reject) => {
         setTimeout(() => {
-          //console.log(data)
+          //console.log([...data])
           // oldValue.tableData.isTreeExpanded = true
           let dataUpdate = [...data];
           let row_table = [...data];
+          let column_check = [...data];
           let range = [...Array(row_table.length).keys()];
           let target_id = newValue.id
           let pass_index = ''
           let newValue_check = newValue
-          console.log(oldValue)
+          let data_status = false
+          let data_output = dataUpdate
+          // console.log(row_table)
+          // console.log(newValue)
+          // console.log(newValue)
+
+          //handle same bu within one row issue
+          // for (let data_count in data_output)
+          // {if (data_output[data_count].id == oldValue.id )
+          //   {data_output[data_count].BU = oldValue.BU}
+          // }
+
+          for (let data_count in column_check)
+          {if (column_check[data_count].id == newValue.id )
+            {column_check[data_count].BU = newValue.BU}
+          }
+
+          // console.log(data_output)
+
+          column_check.forEach(row => {
+            let temp_list_array = []
+            let temp_list = column_check.filter(row_2 => row.id == row_2.parentid || row.id == row_2.id)
+            temp_list.forEach(row_temp => {
+              temp_list_array.push(row_temp.BU)
+            })
+
+            let uniqueCount = new Set(temp_list_array).size;
+            console.log(uniqueCount);
+
+            console.log(temp_list_array)
+            
+            if (uniqueCount == temp_list_array.length & temp_list.length  >= 1)
+            {console.log('ok')}
+            // {}
+            else {
+              console.log('issue')
+              // console.log(temp_list_array)
+              data_status = true
+              // console.log('issue')
+              // alert("BU can't appear more than one time in same series of row");
+              // for (let data_count in data_output)
+              // {if (data_output[data_count].id == oldValue.id )
+              //   {data_output[data_count].BU = oldValue.BU}
+              // }
+    
+                            // alert("Hello! I am an alert box!!");
+
+              // alert("BU can't appear more than one time in same series of row");
+              // data_status = true
+              // alert("BU can't appear more than one time in same series of row");
+
+              // alert("Hello! I am an alert box!!");
+              // setData(dataUpdate);
+              //setData(dataUpdate);
+              // resolve()
+              // console.log('break')
+              // break;
+              // return false
+            }
+              //console.log('break')}
+           
+            // console.log(temp_list)
+            
+
+
+
+
+          })
+          
           // parent.tableData.isTreeExpanded = true;
 
           
@@ -1122,6 +1206,18 @@ const lastpage = () => {
           //console.log(columnDef)
             dataUpdate = dataUpdate.filter(t => t.id !== newValue.id);
             dataUpdate.splice(pass_index,0,newValue_check)
+            if (data_status == true)
+            {
+              alert("BU can't appear more than one time in same series of row");
+              for (let data_count in data_output)
+              {if (dataUpdate[data_count].id == oldValue.id )
+                {dataUpdate[data_count].BU = oldValue.BU}
+              }
+              }
+            else 
+            {}
+
+            //console.log(data_status)
           
           // dataUpdate
           // dataUpdate[pass_index] = newValue
@@ -1130,6 +1226,7 @@ const lastpage = () => {
           setData(dataUpdate);
           first_set(false)
           resolve();
+          console.log(dataUpdate)
         }, 1000)
       }),
 
@@ -1176,11 +1273,9 @@ const lastpage = () => {
       resolve();
     }, 1000)
         })
-
-    
     }}
     
-    
+
 
         
   // editable = {{onRowAdd:setIsLoading(false)}}
@@ -1473,10 +1568,16 @@ const lastpage = () => {
           //className={classes.tableRow}
           draggable= "true"
           onDoubleClick={e => {
-            console.log(props.actions);
-            // props.actions[5]().onClick(e, props.data);
+
+            if (props.data.Query.startsWith('@'))
+            {return }
+            else{
+            // console.log(props.data);
+            // console.log(e)
+            props.actions[5]().onClick(e,props.data);
             //alert("Make row editable");
           }}
+        }
           // onKeyUp={event => {
           //   if (event.key === "Enter"){handleAddRows(1,props.data.tableData)}}}
             
