@@ -222,7 +222,11 @@ const [data, setData] = useState([
 let lasttime = ''
 
 const [columns, setColumns] = useState([
-  { title: "Query", field: "Query",
+  { title: "Query", field: "Query",filtering : false,
+
+  // customFilterAndSearch: (term, rowData) => term == rowData.name.length
+
+  // filtering: false,defaultFilter:'Others',
   
 // isEditable: rowData => rowData.Query.startsWith('@') != true,
 
@@ -412,7 +416,37 @@ const [columns, setColumns] = useState([
   },
   { title: "BU", field: "BU"   
   ,textAlign: "centre",
+  // filtering : true,
+  searchable :false,
   editable: (column_meta,row_value) => row_value.parentid != 'no',
+  // customFilterAndSearch: (term, rowData) => (rowData.BU).indexOf(term) != -1 || rowData.parentid == 'no' ,
+  // filterComponent: ({ columnDef, onFilterChanged }) => (
+  //   <input
+  //   placeholder="custom"
+  //   onChange={(e) => {
+  //     // Calling the onFilterChanged with the current tableId and the new value
+  //     onFilterChanged(columnDef.tableData.id, e.target.value);
+  //     console.log(columnDef)
+  //     console.log(e.target.value)
+  //   }}
+  // />
+  //   // <input
+  //   //   placeholder="custom"
+  //   //   onChange={(e) => {
+  //   //     // Calling the onFilterChanged with the current tableId and the new value
+  //   //     onFilterChanged(columnDef.tableData.id, e.target.value);
+  //   //   }}
+  //   // />
+  // ),
+  // customFilterAndSearch: (term, rowData,test) => {
+  //   let all_data = [...data]
+  //   console.log(test2)
+  //   if (rowData.parentid == 'no'){return true}
+  //   else if (rowData.BU == term[0]){return true}
+  //   else{return null}
+  //   // console.log(term[0])
+  // },
+  
   lookup: {
           None:'',
           Others:"Others",
@@ -1029,16 +1063,39 @@ const lastpage = () => {
 
 
 
+// const Query_Version = () = {
+
+
+// }
 
 
 
+const options_list = [
+    '',
+    "Others",
+    'FTRHK',
+    'PNSHK',
+    'WTCHK',
+    "WTCID",
+    "WTCPH",
+    "WWHK",
+    "WTCTW",
+    "WTCMY",
+    "WTCTH",
+    "WTCSG"
 
+  ]
 
 
 
   return (
     <div className = "OCTAVIA">
     <input type ='file' onChange ={importExcel}/>
+    
+
+
+
+
 
   <MaterialTable 
   title="Query Editior"
@@ -1293,10 +1350,12 @@ const lastpage = () => {
   options={{
     // actionsCellStyle: {
     //   'font-size': '12px',
+    // filtering: true,
     //   color: 'black',
     //   },
     // overflowY: "false",
-    // defaultExpanded:true,
+    //defaultExpanded:false,
+    //viewColumns : true,
       loadingType:'linear',
       //defaultExpanded : true,
     tableLayout: 'auto',
