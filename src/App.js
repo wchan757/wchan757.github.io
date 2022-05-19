@@ -21,6 +21,10 @@ import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutl
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 // import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import TextField from "@material-ui/core/TextField";
+import Tab from "@material-ui/core/TextField";
+import Tabs from "@material-ui/core/TextField";
+
+
 // import Box from '@material-ui/core/Box';
 // import Button from '@material-ui/core/Button';
 // import * as XLSX from 'xlsx/xlsx.mjs';
@@ -222,7 +226,8 @@ const [data, setData] = useState([
 let lasttime = ''
 
 const [columns, setColumns] = useState([
-  { title: "Query", field: "Query",filtering : false,
+  { title: "Query", field: "Query",
+  //filtering : false,
 
   // customFilterAndSearch: (term, rowData) => term == rowData.name.length
 
@@ -417,7 +422,7 @@ const [columns, setColumns] = useState([
   { title: "BU", field: "BU"   
   ,textAlign: "centre",
   // filtering : true,
-  searchable :false,
+  //searchable :false,
   editable: (column_meta,row_value) => row_value.parentid != 'no',
   // customFilterAndSearch: (term, rowData) => (rowData.BU).indexOf(term) != -1 || rowData.parentid == 'no' ,
   // filterComponent: ({ columnDef, onFilterChanged }) => (
@@ -1091,8 +1096,15 @@ const options_list = [
   return (
     <div className = "OCTAVIA">
     <input type ='file' onChange ={importExcel}/>
-    
 
+    {/* <Tab
+    value="one"
+    label="New Arrivals in the Longest Text of Nonfiction that should appear in the next line"
+    wrapped
+  />
+  <Tab value="two" label="Item Two" />
+  <Tab value="three" label="Item Three" /> */}
+ 
 
 
 
@@ -1100,6 +1112,7 @@ const options_list = [
   <MaterialTable 
   title="Query Editior"
   style={{ width: "100%", margin: "0%",fontsize :"12px"}}
+  
   icons={{Edit: () => <EditOutlinedIcon  />,
     //style={{ color: "black" }} />,
           Delete: () => <RemoveCircleOutlineRoundedIcon  style={{ color: "black" }} />,
@@ -1731,7 +1744,7 @@ const options_list = [
     }
   }
   />
-
+ 
 </div>
 
   
