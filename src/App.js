@@ -405,7 +405,7 @@ const [columns, setColumns] = useState([
             // "white-space": "pre",
             // autoEscape:true,
             //"text-indent":"",
-            "font-weight": "900",
+            //"font-weight": "900",
             //"text-transform": "uppercase"
               // autoEscape : true
                //"white-space": "normal",
@@ -685,17 +685,36 @@ const ExportOption = () => {
   const fileData = JSON.stringify(template_json);
   if (job_type == 'install')
   {
-  const blob = new Blob([fileData], {type: "text/plain"});
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.download = 'master.json';
+  for (var bu_name in bu_lister)
+  {
+  
+  var temp_file = template_json['@bu_query'][bu_lister[bu_name]]
+  //temp_file = temp_file.toString()
+  temp_file = temp_file.join("\r\n")
+  var blob = new Blob([temp_file], {type: "text/plain"});
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement('a');
+  link.download = bu_list_use[bu_name] + '.txt';
   link.href = url;
   link.click()
   }
+  var blob = new Blob([fileData], {type: "text/plain"});
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement('a');
+  link.download = 'Master.json';
+  link.href = url;
+  link.click()
+}
   else{return fileData}
 
 }
-
+// var temp_file = template_json['@bu_query'][bu_list_use[bu_name]]
+//   var blob = new Blob([fileData], {type: "text/plain"});
+//   var url = URL.createObjectURL(blob);
+//   var link = document.createElement('a');
+//   link.download = 'master.json';
+//   link.href = url;
+//   link.click()
     
     
     
