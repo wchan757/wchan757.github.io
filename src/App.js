@@ -1020,7 +1020,8 @@ const importExcel =(e) =>{
       for (let iter in result_list)
       {
       var random_id = Math.floor(Math.random() * 1000000)
-      if (result_list[iter].replace(/\s+/g,'') != '' && result_list[iter].startsWith('--')!= true)
+      // if (result_list[iter].replace(/\s+/g,'') != '' && result_list[iter].startsWith('--')!= true)
+      if (result_list[iter].replace(/\s+/g,'') != '')
       {clean_list.push(
         { id : random_id,
           Query: result_list[iter],
