@@ -7,6 +7,7 @@ import tableIcons from "./MaterialTableIcons.js";
 import keyword_highlight from "./keyword_highlight.js";
 import React ,{ useState,useRef  } from 'react';
 import './App.scss';
+import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
 // import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 // import FormControl from '@mui/material/FormControl';
@@ -23,6 +24,8 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import TextField from "@material-ui/core/TextField";
 import Tab from "@material-ui/core/TextField";
 import Tabs from "@material-ui/core/TextField";
+import * as JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 
 // import Box from '@material-ui/core/Box';
@@ -616,7 +619,6 @@ const ExportOption = () => {
     for (let low_bu in bu_list_use)
   {bu_lister.push(bu_list_use[low_bu].toUpperCase())}
 
-
     
     //create the teamplate_query
     for (var temp in master_export)
@@ -683,29 +685,55 @@ const ExportOption = () => {
   template_json['template_query'] = template_query
   //console.log(template_json)
   const fileData = JSON.stringify(template_json);
-  if (job_type == 'install')
+  if (job_type == 'bu_only') 
   {
+    var zip = new JSZip();
   for (var bu_name in bu_lister)
   {
   
   var temp_file = template_json['@bu_query'][bu_lister[bu_name]]
   //temp_file = temp_file.toString()
   temp_file = temp_file.join("\r\n")
-  var blob = new Blob([temp_file], {type: "text/plain"});
-  var url = URL.createObjectURL(blob);
-  var link = document.createElement('a');
-  link.download = bu_list_use[bu_name] + '.txt';
-  link.href = url;
-  link.click()
+  zip.file(bu_list_use[bu_name] + '.txt' , temp_file)
+  // var blob = new Blob([temp_file], {type: "text/plain"});
+  // var url = URL.createObjectURL(blob);
+  // zip.generateAsync({type:"blob"}).then(function(content) {
+  //   // see FileSaver.js
+  //   saveAs(content, "example.zip");
+  // })
+  // var blob = new Blob([zip]);
+  // var url = URL.createObjectURL(blob);
+  // var link = document.createElement('a');
+  // link.download = 'Master.zip';
+  // link.href = url;
+  // link.click()
+  
+
+  // var link = document.createElement('a');
+  // link.download = bu_list_use[bu_name] + '.txt';
+  // link.href = url;
+  // link.click()
   }
-  var blob = new Blob([fileData], {type: "text/plain"});
+  zip.generateAsync({type:"blob"}).then(function(content) {
+    // see FileSaver.js
+    saveAs(content, "sql_query.zip");
+  })
+}
+  else if (job_type == 'validate')
+  {
+    return fileData
+ }
+  else{
+    var blob = new Blob([fileData], {type: "text/plain"});
   var url = URL.createObjectURL(blob);
   var link = document.createElement('a');
   link.download = 'Master.json';
   link.href = url;
   link.click()
-}
-  else{return fileData}
+    
+    
+    
+    }
 
 }
 // var temp_file = template_json['@bu_query'][bu_list_use[bu_name]]
@@ -723,6 +751,14 @@ const ExportOption = () => {
   // }
   // console.log(export_json)
   // //console.log(counter)
+  const Bu_only = () => {
+    const js_return = ExportMaster('bu_only')
+  }
+
+    
+
+
+
 
   const QueryChecker = (event) => {
 
@@ -742,6 +778,7 @@ const ExportOption = () => {
   };
 
 const bu_specific = (e , rowData) => {
+    // var tempMyObj = Object.assign([], data);
     previous_action([...data])
     let _data = [...data]
     let mum_id = rowData.id
@@ -1188,6 +1225,7 @@ const options_list = [
       
       onRowUpdate:(newValue, oldValue) =>
       new Promise((resolve, reject) => {
+        // previous_action([...data])
         setTimeout(() => {
           //console.log([...data])
           // oldValue.tableData.isTreeExpanded = true
@@ -1547,7 +1585,8 @@ const options_list = [
     
     actions={[
       // {icon: tableIcons.Add,
-        {icon: ArrowBackIcon,
+        {
+          icon: ArrowBackIcon,
           iconProps: {color:  "secondary" },
           tooltip: "last step",
           onClick: lastpage,
@@ -1556,8 +1595,18 @@ const options_list = [
           disabled : first_disable == true,
          
         },
+        {
+          icon: AutoAwesomeMotionIcon,
+          iconProps: {color:  "secondary" },
+          tooltip: "export bu query zip file",
+          onClick: Bu_only,
+          //,isFreeAction:true
+          position : 'toolbar'  
+          // disabled : first_disable == true,
+         
+        },
       {icon: tableIcons.Export,
-      tooltip: "export",
+      tooltip: "export master file",
       iconProps: { style: { fontSize: "6px", color: "green" } },
         onClick: ExportOption,
         //,isFreeAction:true
