@@ -804,6 +804,7 @@ const ExportOption = () => {
 
 const bu_specific = (e , rowData) => {
     // var tempMyObj = Object.assign([], data);
+    setCount([...data], true)
     previous_action([...data])
     let _data = [...data]
     let mum_id = rowData.id
@@ -990,6 +991,7 @@ const reOrderRow = (from, to) => {
   //console.log(to)
 
   //TODO:
+  setCount([...data], true)
   previous_action([...data])
   let _data = data;
   //console.log(from)
@@ -1236,7 +1238,11 @@ const options_list = [
     editable = {{
 
       // isEditable: rowData => rowData.Query.startsWith('@') != true, // only name(a) rows would be editable
-      isEditable: (rowData) => {try {if (rowData.Query.startsWith('@')!=true)
+      isEditable: (rowData) => {
+        // previous_action([...data]);
+        try {
+          
+          if (rowData.Query.startsWith('@')!=true)
       {return 'always'}} 
       catch{return}
       finally{}
@@ -1250,8 +1256,9 @@ const options_list = [
       
       onRowUpdate:(newValue, oldValue) =>
       new Promise((resolve, reject) => {
-        // previous_action([...data])
+        //previous_action([...data])
         setTimeout(() => {
+          setCount([...data], true)
           //console.log([...data])
           // oldValue.tableData.isTreeExpanded = true
           let dataUpdate = [...data];
@@ -1387,6 +1394,7 @@ const options_list = [
     onRowDelete:(newValue,rowData) =>
         new Promise((resolve, reject) => {
           setTimeout(() => {
+            
            // console.log(newValue)
            // console.log(oldValue)
           let rowData = [newValue];
@@ -1614,7 +1622,7 @@ const options_list = [
           icon: ArrowBackIcon,
           iconProps: {color:  "secondary" },
           tooltip: "last step",
-          onClick: undoCount,
+          onClick: lastpage,
           //,isFreeAction:true
           position : 'toolbar'  ,
           disabled : first_disable == true,
