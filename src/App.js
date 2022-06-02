@@ -8,6 +8,7 @@ import keyword_highlight from "./keyword_highlight.js";
 import React ,{ useState,useRef  } from 'react';
 import './App.scss';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
+import useUndo from 'use-undo';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
 // import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 // import FormControl from '@mui/material/FormControl';
@@ -89,6 +90,20 @@ const BasicTable = () => {
       
   //   }
   // });
+  const [
+    countState,
+    {
+      set: setCount,
+      reset: resetCount,
+      undo: undoCount,
+      redo: redoCount,
+      canUndo,
+      canRedo,
+    },
+  ] = useUndo(0, { useCheckpoints: true });
+  const { present: presentCount } = countState;
+
+  
   const useStyles = makeStyles({
     tableRow: {
       '& td': {
@@ -694,7 +709,9 @@ const ExportOption = () => {
   var temp_file = template_json['@bu_query'][bu_lister[bu_name]]
   //temp_file = temp_file.toString()
   temp_file = temp_file.join("\r\n")
-  zip.file(bu_list_use[bu_name] + '.txt' , temp_file)
+  var zip_file = zip.file(bu_list_use[bu_name] + '.sql' , temp_file)
+  //var zip_blob = new Blob([fileData], {type: "text/plain"});
+
   // var blob = new Blob([temp_file], {type: "text/plain"});
   // var url = URL.createObjectURL(blob);
   // zip.generateAsync({type:"blob"}).then(function(content) {
@@ -714,10 +731,18 @@ const ExportOption = () => {
   // link.href = url;
   // link.click()
   }
-  zip.generateAsync({type:"blob"}).then(function(content) {
-    // see FileSaver.js
-    saveAs(content, "sql_query.zip");
-  })
+  
+  zip.generateAsync({type:"blob"})
+  .then(function (content) {
+      // see FileSaver.js
+      saveAs(content, "sql_query.zip");
+  });
+  
+
+  // zip.generateAsync({type:"blob"}).then(function(content) {
+  //   // see FileSaver.jsc
+  //   saveAs(content, "sql_query.zip");
+  // })
 }
   else if (job_type == 'validate')
   {
@@ -1589,7 +1614,7 @@ const options_list = [
           icon: ArrowBackIcon,
           iconProps: {color:  "secondary" },
           tooltip: "last step",
-          onClick: lastpage,
+          onClick: undoCount,
           //,isFreeAction:true
           position : 'toolbar'  ,
           disabled : first_disable == true,
