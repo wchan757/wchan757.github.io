@@ -473,7 +473,7 @@ const [columns, setColumns] = useState([
   lookup: {
           None:'',
           Others:"Others",
-          FTRTH:'FTRHK',
+          FTRHK:'FTRHK',
           PNSHK:'PNSHK',
           WTCHK:'WTCHK',
           WTCID:"WTCID",
